@@ -17,6 +17,8 @@ import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
 
+import java.util.Comparator;
+
 import androidx.annotation.IdRes;
 
 /**
@@ -28,6 +30,8 @@ import androidx.annotation.IdRes;
 public abstract class PhoneField extends LinearLayout {
 
     private Spinner mSpinner;
+
+    private CountriesAdapter mAdapter;
 
     private EditText mEditText;
 
@@ -82,7 +86,13 @@ public abstract class PhoneField extends LinearLayout {
             throw new IllegalStateException("Please provide a valid xml layout");
         }
 
-        final CountriesAdapter adapter = new CountriesAdapter(getContext(), Countries.COUNTRIES);
+        mAdapter = new CountriesAdapter(getContext(), Countries.COUNTRIES);
+        mAdapter.sort(new Comparator<Country>() {
+            @Override
+            public int compare(Country c1, Country c2) {
+                return c1.getDisplayName().compareToIgnoreCase(c2.getDisplayName());
+            }
+        });
         mSpinner.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -127,11 +137,11 @@ public abstract class PhoneField extends LinearLayout {
 
         mEditText.addTextChangedListener(textWatcher);
 
-        mSpinner.setAdapter(adapter);
+        mSpinner.setAdapter(mAdapter);
         mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mCountry = adapter.getItem(position);
+                mCountry = mAdapter.getItem(position);
             }
 
             @Override
@@ -209,22 +219,20 @@ public abstract class PhoneField extends LinearLayout {
      * @param countryCode the country code
      */
     public void setDefaultCountry(String countryCode) {
-        for (int i = 0; i < Countries.COUNTRIES.size(); i++) {
-            Country country = Countries.COUNTRIES.get(i);
+        for (Country country : Countries.COUNTRIES) {
             if (country.getCode().equalsIgnoreCase(countryCode)) {
                 mCountry = country;
-                mDefaultCountryPosition = i;
-                mSpinner.setSelection(i);
+                mDefaultCountryPosition = mAdapter.getPosition(mCountry);
+                mSpinner.setSelection(mDefaultCountryPosition);
             }
         }
     }
 
     private void selectCountry(int dialCode) {
-        for (int i = 0; i < Countries.COUNTRIES.size(); i++) {
-            Country country = Countries.COUNTRIES.get(i);
+        for (Country country : Countries.COUNTRIES) {
             if (country.getDialCode() == dialCode) {
                 mCountry = country;
-                mSpinner.setSelection(i);
+                mSpinner.setSelection(mAdapter.getPosition(mCountry));
             }
         }
     }
