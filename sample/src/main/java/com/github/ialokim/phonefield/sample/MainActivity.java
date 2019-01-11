@@ -2,9 +2,12 @@ package com.github.ialokim.phonefield.sample;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.github.ialokim.phonefield.PhoneEditText;
@@ -22,6 +25,10 @@ public class MainActivity extends AppCompatActivity {
         final PhoneEditText phoneEditText = (PhoneEditText) findViewById(R.id.edit_text);
 
         CustomPhoneInputLayout customPhoneInputLayout = new CustomPhoneInputLayout(this, "EG");
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        int margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics());
+        lp.setMargins(0, margin, 0, margin);
+        customPhoneInputLayout.setLayoutParams(lp);
 
         final ViewGroup viewGroup = (ViewGroup) ((ViewGroup) this
                 .findViewById(android.R.id.content)).getChildAt(0);
@@ -36,12 +43,6 @@ public class MainActivity extends AppCompatActivity {
         assert phoneEditText != null;
         assert buttonInputLayout != null;
         assert buttonEditText != null;
-
-        phoneInputLayout.setHint(R.string.phone_hint_input_layout);
-        phoneInputLayout.setDefaultCountry("DE");
-
-        phoneEditText.setHint(R.string.phone_hint_edit_text);
-        phoneEditText.setDefaultCountry("FR");
 
         buttonInputLayout.setOnClickListener(new View.OnClickListener() {
             @Override

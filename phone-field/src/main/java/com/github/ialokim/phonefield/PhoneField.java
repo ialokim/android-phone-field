@@ -1,6 +1,7 @@
 package com.github.ialokim.phonefield;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -15,6 +16,8 @@ import android.widget.Spinner;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
+
+import androidx.annotation.IdRes;
 
 /**
  * PhoneField is a custom view for phone numbers with the corresponding country flag, and it uses
@@ -65,6 +68,7 @@ public abstract class PhoneField extends LinearLayout {
         inflate(getContext(), getLayoutResId(), this);
         updateLayoutAttributes();
         prepareView();
+        applyAttrs(attrs);
     }
 
     /**
@@ -136,6 +140,17 @@ public abstract class PhoneField extends LinearLayout {
             }
         });
 
+    }
+
+    public void applyAttrs(AttributeSet attrs) {
+        TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.PhoneField);
+        @IdRes int hint = ta.getResourceId(R.styleable.PhoneField_hint, -1);
+        String defaultCountry = ta.getString(R.styleable.PhoneField_defaultCountry);
+        if (hint != -1)
+            setHint(hint);
+        if (defaultCountry != null)
+            setDefaultCountry(defaultCountry);
+        ta.recycle();
     }
 
     /**
