@@ -17,6 +17,12 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp" />
 
+    <Button
+        android:id="@+id/submit_button_input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/submit" />
+
     <com.github.ialokim.phonefield.PhoneEditText
         android:id="@+id/edit_text"
         android:layout_width="match_parent"
@@ -25,7 +31,7 @@
         android:layout_marginBottom="16dp" />
 
     <Button
-        android:id="@+id/submit_button"
+        android:id="@+id/submit_button_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/submit" />

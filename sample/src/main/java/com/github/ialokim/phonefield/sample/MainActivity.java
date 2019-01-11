@@ -26,43 +26,45 @@ public class MainActivity extends AppCompatActivity {
         final ViewGroup viewGroup = (ViewGroup) ((ViewGroup) this
                 .findViewById(android.R.id.content)).getChildAt(0);
 
-        viewGroup.addView(customPhoneInputLayout, 2);
+        viewGroup.addView(customPhoneInputLayout, 4);
 
 
-        final Button button = (Button) findViewById(R.id.submit_button);
+        final Button buttonInputLayout = (Button) findViewById(R.id.submit_button_input_layout);
+        final Button buttonEditText = (Button) findViewById(R.id.submit_button_edit_text);
 
         assert phoneInputLayout != null;
         assert phoneEditText != null;
-        assert button != null;
+        assert buttonInputLayout != null;
+        assert buttonEditText != null;
 
-        phoneInputLayout.setHint(R.string.phone_hint);
+        phoneInputLayout.setHint(R.string.phone_hint_input_layout);
         phoneInputLayout.setDefaultCountry("DE");
 
-        phoneEditText.setHint(R.string.phone_hint);
+        phoneEditText.setHint(R.string.phone_hint_edit_text);
         phoneEditText.setDefaultCountry("FR");
 
-        button.setOnClickListener(new View.OnClickListener() {
+        buttonInputLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean valid = true;
                 if (phoneInputLayout.isValid()) {
                     phoneInputLayout.setError(null);
+                    Toast.makeText(MainActivity.this, R.string.valid_phone_number, Toast.LENGTH_LONG).show();
+
                 } else {
                     phoneInputLayout.setError(getString(R.string.invalid_phone_number));
-                    valid = false;
                 }
+            }
+        });
 
+        buttonEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 if (phoneEditText.isValid()) {
                     phoneEditText.setError(null);
+                    Toast.makeText(MainActivity.this, R.string.valid_phone_number, Toast.LENGTH_LONG).show();
+
                 } else {
                     phoneEditText.setError(getString(R.string.invalid_phone_number));
-                    valid = false;
-                }
-
-                if (valid) {
-                    Toast.makeText(MainActivity.this, R.string.valid_phone_number, Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(MainActivity.this, R.string.invalid_phone_number, Toast.LENGTH_LONG).show();
                 }
             }
         });

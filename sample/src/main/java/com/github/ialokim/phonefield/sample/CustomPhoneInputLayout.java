@@ -31,7 +31,7 @@ public class CustomPhoneInputLayout extends PhoneInputLayout {
 
     private void init() {
         setDefaultCountry(mCountryCode);
-        setHint(R.string.phone_hint);
+        setHint(R.string.phone_hint_input_layout_code);
     }
 
 
