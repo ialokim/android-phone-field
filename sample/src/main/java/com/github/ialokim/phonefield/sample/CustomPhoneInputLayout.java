@@ -1,9 +1,9 @@
-package com.lamudi.phonefield.sample;
+package com.github.ialokim.phonefield.sample;
 
 import android.content.Context;
 import android.util.AttributeSet;
 
-import com.lamudi.phonefield.PhoneInputLayout;
+import com.github.ialokim.phonefield.PhoneInputLayout;
 
 /**
  * Custom PhoneInputLayout that allows users

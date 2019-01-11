@@ -1,4 +1,4 @@
-package com.lamudi.phonefield;
+package com.github.ialokim.phonefield;
 
 import android.content.Context;
 import com.google.android.material.textfield.TextInputLayout;

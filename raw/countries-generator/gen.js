@@ -23,7 +23,7 @@ function generateCountriesClass() {
       }
     };
 
-    a("package com.lamudi.phonefield;");
+    a("package com.github.ialokim.phonefield;");
     a();
     a("import java.util.ArrayList;");
     a("import java.util.List;");

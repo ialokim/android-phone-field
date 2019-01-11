@@ -1,4 +1,4 @@
-package com.lamudi.phonefield;
+package com.github.ialokim.phonefield;
 
 import java.util.ArrayList;
 import java.util.List;

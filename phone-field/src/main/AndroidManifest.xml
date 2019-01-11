@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.lamudi.phonefield">
+    package="com.github.ialokim.phonefield">
 
     <application
         android:allowBackup="true"

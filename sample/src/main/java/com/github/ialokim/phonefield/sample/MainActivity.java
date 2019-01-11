@@ -1,4 +1,4 @@
-package com.lamudi.phonefield.sample;
+package com.github.ialokim.phonefield.sample;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.lamudi.phonefield.PhoneEditText;
-import com.lamudi.phonefield.PhoneInputLayout;
+import com.github.ialokim.phonefield.PhoneEditText;
+import com.github.ialokim.phonefield.PhoneInputLayout;
 
 public class MainActivity extends AppCompatActivity {
 
