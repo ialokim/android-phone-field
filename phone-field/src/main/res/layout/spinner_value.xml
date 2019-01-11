@@ -6,9 +6,8 @@
     android:paddingTop="@dimen/padding_medium"
     android:paddingBottom="@dimen/padding_medium">
 
-  <ImageView
-      android:id="@+id/flag"
-      android:layout_width="@dimen/flag_size"
-      android:layout_height="@dimen/flag_size"
-      />
+    <ImageView
+        android:id="@+id/flag"
+        android:layout_width="@dimen/flag_size"
+        android:layout_height="@dimen/flag_size" />
 </LinearLayout>

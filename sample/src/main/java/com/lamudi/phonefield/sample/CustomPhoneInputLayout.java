@@ -2,6 +2,7 @@ package com.lamudi.phonefield.sample;
 
 import android.content.Context;
 import android.util.AttributeSet;
+
 import com.lamudi.phonefield.PhoneInputLayout;
 
 /**
@@ -11,27 +12,27 @@ import com.lamudi.phonefield.PhoneInputLayout;
 
 public class CustomPhoneInputLayout extends PhoneInputLayout {
 
-  private String mCountryCode;
+    private String mCountryCode;
 
-  public CustomPhoneInputLayout(Context context, AttributeSet attrs) {
-    this(context, attrs, 0);
-  }
+    public CustomPhoneInputLayout(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
 
-  public CustomPhoneInputLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-    super(context, attrs, defStyleAttr);
-    init();
-  }
+    public CustomPhoneInputLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init();
+    }
 
-  public CustomPhoneInputLayout(Context context, String countryCode) {
-    super(context);
-    mCountryCode = countryCode;
-    init();
-  }
+    public CustomPhoneInputLayout(Context context, String countryCode) {
+        super(context);
+        mCountryCode = countryCode;
+        init();
+    }
 
-  private void init() {
-    setDefaultCountry(mCountryCode);
-    setHint(R.string.phone_hint);
-  }
+    private void init() {
+        setDefaultCountry(mCountryCode);
+        setHint(R.string.phone_hint);
+    }
 
 
 }

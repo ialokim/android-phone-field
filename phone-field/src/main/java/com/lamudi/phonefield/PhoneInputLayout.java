@@ -12,55 +12,55 @@ import android.view.ViewGroup;
  */
 public class PhoneInputLayout extends PhoneField {
 
-  private TextInputLayout mTextInputLayout;
+    private TextInputLayout mTextInputLayout;
 
-  public PhoneInputLayout(Context context) {
-    this(context, null);
-  }
-
-  public PhoneInputLayout(Context context, AttributeSet attrs) {
-    this(context, attrs, 0);
-  }
-
-  public PhoneInputLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-    super(context, attrs, defStyleAttr);
-  }
-
-  @Override
-  protected void updateLayoutAttributes() {
-    setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-        ViewGroup.LayoutParams.WRAP_CONTENT));
-    setGravity(Gravity.TOP);
-    setOrientation(HORIZONTAL);
-  }
-
-  @Override
-  protected void prepareView() {
-    super.prepareView();
-    mTextInputLayout = (TextInputLayout) findViewWithTag(getResources().getString(R.string.com_lamudi_phonefield_til_phone));
-  }
-
-  @Override
-  public int getLayoutResId() {
-    return R.layout.phone_text_input_layout;
-  }
-
-  @Override
-  public void setHint(int resId) {
-    mTextInputLayout.setHint(getContext().getString(resId));
-  }
-
-  @Override
-  public void setError(String error) {
-    if (error == null || error.length() == 0) {
-      mTextInputLayout.setErrorEnabled(false);
-    } else {
-      mTextInputLayout.setErrorEnabled(true);
+    public PhoneInputLayout(Context context) {
+        this(context, null);
     }
-    mTextInputLayout.setError(error);
-  }
 
-  public TextInputLayout getTextInputLayout() {
-    return mTextInputLayout;
-  }
+    public PhoneInputLayout(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public PhoneInputLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+    }
+
+    @Override
+    protected void updateLayoutAttributes() {
+        setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT));
+        setGravity(Gravity.TOP);
+        setOrientation(HORIZONTAL);
+    }
+
+    @Override
+    protected void prepareView() {
+        super.prepareView();
+        mTextInputLayout = (TextInputLayout) findViewWithTag(getResources().getString(R.string.com_lamudi_phonefield_til_phone));
+    }
+
+    @Override
+    public int getLayoutResId() {
+        return R.layout.phone_text_input_layout;
+    }
+
+    @Override
+    public void setHint(int resId) {
+        mTextInputLayout.setHint(getContext().getString(resId));
+    }
+
+    @Override
+    public void setError(String error) {
+        if (error == null || error.length() == 0) {
+            mTextInputLayout.setErrorEnabled(false);
+        } else {
+            mTextInputLayout.setErrorEnabled(true);
+        }
+        mTextInputLayout.setError(error);
+    }
+
+    public TextInputLayout getTextInputLayout() {
+        return mTextInputLayout;
+    }
 }
