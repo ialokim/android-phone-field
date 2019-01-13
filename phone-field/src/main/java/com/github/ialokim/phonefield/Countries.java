@@ -1,255 +1,691 @@
 package com.github.ialokim.phonefield;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public final class Countries {
 
-    public static final List<Country> COUNTRIES = new ArrayList<>();
-
+    public static final Map<Integer,List<Country>> COUNTRIES = new HashMap<>();
     static {
-        COUNTRIES.add(new Country("af", "Afghanistan (‫افغانستان‬‎)", 93));
-        COUNTRIES.add(new Country("al", "Albania (Shqipëri)", 355));
-        COUNTRIES.add(new Country("dz", "Algeria (‫الجزائر‬‎)", 213));
-        COUNTRIES.add(new Country("as", "American Samoa", 1684));
-        COUNTRIES.add(new Country("ad", "Andorra", 376));
-        COUNTRIES.add(new Country("ao", "Angola", 244));
-        COUNTRIES.add(new Country("ai", "Anguilla", 1264));
-        COUNTRIES.add(new Country("ag", "Antigua and Barbuda", 1268));
-        COUNTRIES.add(new Country("ar", "Argentina", 54));
-        COUNTRIES.add(new Country("am", "Armenia (Հայաստան)", 374));
-        COUNTRIES.add(new Country("aw", "Aruba", 297));
-        COUNTRIES.add(new Country("au", "Australia", 61));
-        COUNTRIES.add(new Country("at", "Austria (Österreich)", 43));
-        COUNTRIES.add(new Country("az", "Azerbaijan (Azərbaycan)", 994));
-        COUNTRIES.add(new Country("bs", "Bahamas", 1242));
-        COUNTRIES.add(new Country("bh", "Bahrain (‫البحرين‬‎)", 973));
-        COUNTRIES.add(new Country("bd", "Bangladesh (বাংলাদেশ)", 880));
-        COUNTRIES.add(new Country("bb", "Barbados", 1246));
-        COUNTRIES.add(new Country("by", "Belarus (Беларусь)", 375));
-        COUNTRIES.add(new Country("be", "Belgium (België)", 32));
-        COUNTRIES.add(new Country("bz", "Belize", 501));
-        COUNTRIES.add(new Country("bj", "Benin (Bénin)", 229));
-        COUNTRIES.add(new Country("bm", "Bermuda", 1441));
-        COUNTRIES.add(new Country("bt", "Bhutan (འབྲུག)", 975));
-        COUNTRIES.add(new Country("bo", "Bolivia", 591));
-        COUNTRIES.add(new Country("ba", "Bosnia and Herzegovina (Босна и Херцеговина)", 387));
-        COUNTRIES.add(new Country("bw", "Botswana", 267));
-        COUNTRIES.add(new Country("br", "Brazil (Brasil)", 55));
-        COUNTRIES.add(new Country("io", "British Indian Ocean Territory", 246));
-        COUNTRIES.add(new Country("vg", "British Virgin Islands", 1284));
-        COUNTRIES.add(new Country("bn", "Brunei", 673));
-        COUNTRIES.add(new Country("bg", "Bulgaria (България)", 359));
-        COUNTRIES.add(new Country("bf", "Burkina Faso", 226));
-        COUNTRIES.add(new Country("bi", "Burundi (Uburundi)", 257));
-        COUNTRIES.add(new Country("kh", "Cambodia (កម្ពុជា)", 855));
-        COUNTRIES.add(new Country("cm", "Cameroon (Cameroun)", 237));
-        COUNTRIES.add(new Country("ca", "Canada", 1));
-        COUNTRIES.add(new Country("cv", "Cape Verde (Kabu Verdi)", 238));
-        COUNTRIES.add(new Country("bq", "Caribbean Netherlands", 599));
-        COUNTRIES.add(new Country("ky", "Cayman Islands", 1345));
-        COUNTRIES.add(new Country("cf", "Central African Republic (République centrafricaine)", 236));
-        COUNTRIES.add(new Country("td", "Chad (Tchad)", 235));
-        COUNTRIES.add(new Country("cl", "Chile", 56));
-        COUNTRIES.add(new Country("cn", "China (中国)", 86));
-        COUNTRIES.add(new Country("cx", "Christmas Island", 61));
-        COUNTRIES.add(new Country("cc", "Cocos (Keeling) Islands", 61));
-        COUNTRIES.add(new Country("co", "Colombia", 57));
-        COUNTRIES.add(new Country("km", "Comoros (‫جزر القمر‬‎)", 269));
-        COUNTRIES.add(new Country("cd", "Congo (DRC) (Jamhuri ya Kidemokrasia ya Kongo)", 243));
-        COUNTRIES.add(new Country("cg", "Congo (Republic) (Congo-Brazzaville)", 242));
-        COUNTRIES.add(new Country("ck", "Cook Islands", 682));
-        COUNTRIES.add(new Country("cr", "Costa Rica", 506));
-        COUNTRIES.add(new Country("ci", "Côte d’Ivoire", 225));
-        COUNTRIES.add(new Country("hr", "Croatia (Hrvatska)", 385));
-        COUNTRIES.add(new Country("cu", "Cuba", 53));
-        COUNTRIES.add(new Country("cw", "Curaçao", 599));
-        COUNTRIES.add(new Country("cy", "Cyprus (Κύπρος)", 357));
-        COUNTRIES.add(new Country("cz", "Czech Republic (Česká republika)", 420));
-        COUNTRIES.add(new Country("dk", "Denmark (Danmark)", 45));
-        COUNTRIES.add(new Country("dj", "Djibouti", 253));
-        COUNTRIES.add(new Country("dm", "Dominica", 1767));
-        COUNTRIES.add(new Country("do", "Dominican Republic (República Dominicana)", 1));
-        COUNTRIES.add(new Country("ec", "Ecuador", 593));
-        COUNTRIES.add(new Country("eg", "Egypt (‫مصر‬‎)", 20));
-        COUNTRIES.add(new Country("sv", "El Salvador", 503));
-        COUNTRIES.add(new Country("gq", "Equatorial Guinea (Guinea Ecuatorial)", 240));
-        COUNTRIES.add(new Country("er", "Eritrea", 291));
-        COUNTRIES.add(new Country("ee", "Estonia (Eesti)", 372));
-        COUNTRIES.add(new Country("et", "Ethiopia", 251));
-        COUNTRIES.add(new Country("fk", "Falkland Islands (Islas Malvinas)", 500));
-        COUNTRIES.add(new Country("fo", "Faroe Islands (Føroyar)", 298));
-        COUNTRIES.add(new Country("fj", "Fiji", 679));
-        COUNTRIES.add(new Country("fi", "Finland (Suomi)", 358));
-        COUNTRIES.add(new Country("fr", "France", 33));
-        COUNTRIES.add(new Country("gf", "French Guiana (Guyane française)", 594));
-        COUNTRIES.add(new Country("pf", "French Polynesia (Polynésie française)", 689));
-        COUNTRIES.add(new Country("ga", "Gabon", 241));
-        COUNTRIES.add(new Country("gm", "Gambia", 220));
-        COUNTRIES.add(new Country("ge", "Georgia (საქართველო)", 995));
-        COUNTRIES.add(new Country("de", "Germany (Deutschland)", 49));
-        COUNTRIES.add(new Country("gh", "Ghana (Gaana)", 233));
-        COUNTRIES.add(new Country("gi", "Gibraltar", 350));
-        COUNTRIES.add(new Country("gr", "Greece (Ελλάδα)", 30));
-        COUNTRIES.add(new Country("gl", "Greenland (Kalaallit Nunaat)", 299));
-        COUNTRIES.add(new Country("gd", "Grenada", 1473));
-        COUNTRIES.add(new Country("gp", "Guadeloupe", 590));
-        COUNTRIES.add(new Country("gu", "Guam", 1671));
-        COUNTRIES.add(new Country("gt", "Guatemala", 502));
-        COUNTRIES.add(new Country("gg", "Guernsey", 44));
-        COUNTRIES.add(new Country("gn", "Guinea (Guinée)", 224));
-        COUNTRIES.add(new Country("gw", "Guinea-Bissau (Guiné Bissau)", 245));
-        COUNTRIES.add(new Country("gy", "Guyana", 592));
-        COUNTRIES.add(new Country("ht", "Haiti", 509));
-        COUNTRIES.add(new Country("hn", "Honduras", 504));
-        COUNTRIES.add(new Country("hk", "Hong Kong (香港)", 852));
-        COUNTRIES.add(new Country("hu", "Hungary (Magyarország)", 36));
-        COUNTRIES.add(new Country("is", "Iceland (Ísland)", 354));
-        COUNTRIES.add(new Country("in", "India (भारत)", 91));
-        COUNTRIES.add(new Country("id", "Indonesia", 62));
-        COUNTRIES.add(new Country("ir", "Iran (‫ایران‬‎)", 98));
-        COUNTRIES.add(new Country("iq", "Iraq (‫العراق‬‎)", 964));
-        COUNTRIES.add(new Country("ie", "Ireland", 353));
-        COUNTRIES.add(new Country("im", "Isle of Man", 44));
-        COUNTRIES.add(new Country("il", "Israel (‫ישראל‬‎)", 972));
-        COUNTRIES.add(new Country("it", "Italy (Italia)", 39));
-        COUNTRIES.add(new Country("jm", "Jamaica", 1876));
-        COUNTRIES.add(new Country("jp", "Japan (日本)", 81));
-        COUNTRIES.add(new Country("je", "Jersey", 44));
-        COUNTRIES.add(new Country("jo", "Jordan (‫الأردن‬‎)", 962));
-        COUNTRIES.add(new Country("kz", "Kazakhstan (Казахстан)", 7));
-        COUNTRIES.add(new Country("ke", "Kenya", 254));
-        COUNTRIES.add(new Country("ki", "Kiribati", 686));
-        COUNTRIES.add(new Country("kw", "Kuwait (‫الكويت‬‎)", 965));
-        COUNTRIES.add(new Country("kg", "Kyrgyzstan (Кыргызстан)", 996));
-        COUNTRIES.add(new Country("la", "Laos (ລາວ)", 856));
-        COUNTRIES.add(new Country("lv", "Latvia (Latvija)", 371));
-        COUNTRIES.add(new Country("lb", "Lebanon (‫لبنان‬‎)", 961));
-        COUNTRIES.add(new Country("ls", "Lesotho", 266));
-        COUNTRIES.add(new Country("lr", "Liberia", 231));
-        COUNTRIES.add(new Country("ly", "Libya (‫ليبيا‬‎)", 218));
-        COUNTRIES.add(new Country("li", "Liechtenstein", 423));
-        COUNTRIES.add(new Country("lt", "Lithuania (Lietuva)", 370));
-        COUNTRIES.add(new Country("lu", "Luxembourg", 352));
-        COUNTRIES.add(new Country("mo", "Macau (澳門)", 853));
-        COUNTRIES.add(new Country("mk", "Macedonia (FYROM) (Македонија)", 389));
-        COUNTRIES.add(new Country("mg", "Madagascar (Madagasikara)", 261));
-        COUNTRIES.add(new Country("mw", "Malawi", 265));
-        COUNTRIES.add(new Country("my", "Malaysia", 60));
-        COUNTRIES.add(new Country("mv", "Maldives", 960));
-        COUNTRIES.add(new Country("ml", "Mali", 223));
-        COUNTRIES.add(new Country("mt", "Malta", 356));
-        COUNTRIES.add(new Country("mh", "Marshall Islands", 692));
-        COUNTRIES.add(new Country("mq", "Martinique", 596));
-        COUNTRIES.add(new Country("mr", "Mauritania (‫موريتانيا‬‎)", 222));
-        COUNTRIES.add(new Country("mu", "Mauritius (Moris)", 230));
-        COUNTRIES.add(new Country("yt", "Mayotte", 262));
-        COUNTRIES.add(new Country("mx", "Mexico (México)", 52));
-        COUNTRIES.add(new Country("fm", "Micronesia", 691));
-        COUNTRIES.add(new Country("md", "Moldova (Republica Moldova)", 373));
-        COUNTRIES.add(new Country("mc", "Monaco", 377));
-        COUNTRIES.add(new Country("mn", "Mongolia (Монгол)", 976));
-        COUNTRIES.add(new Country("me", "Montenegro (Crna Gora)", 382));
-        COUNTRIES.add(new Country("ms", "Montserrat", 1664));
-        COUNTRIES.add(new Country("ma", "Morocco (‫المغرب‬‎)", 212));
-        COUNTRIES.add(new Country("mz", "Mozambique (Moçambique)", 258));
-        COUNTRIES.add(new Country("mm", "Myanmar (Burma) (မြန်မာ)", 95));
-        COUNTRIES.add(new Country("na", "Namibia (Namibië)", 264));
-        COUNTRIES.add(new Country("nr", "Nauru", 674));
-        COUNTRIES.add(new Country("np", "Nepal (नेपाल)", 977));
-        COUNTRIES.add(new Country("nl", "Netherlands (Nederland)", 31));
-        COUNTRIES.add(new Country("nc", "New Caledonia (Nouvelle-Calédonie)", 687));
-        COUNTRIES.add(new Country("nz", "New Zealand", 64));
-        COUNTRIES.add(new Country("ni", "Nicaragua", 505));
-        COUNTRIES.add(new Country("ne", "Niger (Nijar)", 227));
-        COUNTRIES.add(new Country("ng", "Nigeria", 234));
-        COUNTRIES.add(new Country("nu", "Niue", 683));
-        COUNTRIES.add(new Country("nf", "Norfolk Island", 672));
-        COUNTRIES.add(new Country("kp", "North Korea (조선 민주주의 인민 공화국)", 850));
-        COUNTRIES.add(new Country("mp", "Northern Mariana Islands", 1670));
-        COUNTRIES.add(new Country("no", "Norway (Norge)", 47));
-        COUNTRIES.add(new Country("om", "Oman (‫عُمان‬‎)", 968));
-        COUNTRIES.add(new Country("pk", "Pakistan (‫پاکستان‬‎)", 92));
-        COUNTRIES.add(new Country("pw", "Palau", 680));
-        COUNTRIES.add(new Country("ps", "Palestine (‫فلسطين‬‎)", 970));
-        COUNTRIES.add(new Country("pa", "Panama (Panamá)", 507));
-        COUNTRIES.add(new Country("pg", "Papua New Guinea", 675));
-        COUNTRIES.add(new Country("py", "Paraguay", 595));
-        COUNTRIES.add(new Country("pe", "Peru (Perú)", 51));
-        COUNTRIES.add(new Country("ph", "Philippines", 63));
-        COUNTRIES.add(new Country("pl", "Poland (Polska)", 48));
-        COUNTRIES.add(new Country("pt", "Portugal", 351));
-        COUNTRIES.add(new Country("pr", "Puerto Rico", 1));
-        COUNTRIES.add(new Country("qa", "Qatar (‫قطر‬‎)", 974));
-        COUNTRIES.add(new Country("re", "Réunion (La Réunion)", 262));
-        COUNTRIES.add(new Country("ro", "Romania (România)", 40));
-        COUNTRIES.add(new Country("ru", "Russia (Россия)", 7));
-        COUNTRIES.add(new Country("rw", "Rwanda", 250));
-        COUNTRIES.add(new Country("bl", "Saint Barthélemy (Saint-Barthélemy)", 590));
-        COUNTRIES.add(new Country("sh", "Saint Helena", 290));
-        COUNTRIES.add(new Country("kn", "Saint Kitts and Nevis", 1869));
-        COUNTRIES.add(new Country("lc", "Saint Lucia", 1758));
-        COUNTRIES.add(new Country("mf", "Saint Martin (Saint-Martin (partie française))", 590));
-        COUNTRIES.add(new Country("pm", "Saint Pierre and Miquelon (Saint-Pierre-et-Miquelon)", 508));
-        COUNTRIES.add(new Country("vc", "Saint Vincent and the Grenadines", 1784));
-        COUNTRIES.add(new Country("ws", "Samoa", 685));
-        COUNTRIES.add(new Country("sm", "San Marino", 378));
-        COUNTRIES.add(new Country("st", "São Tomé and Príncipe (São Tomé e Príncipe)", 239));
-        COUNTRIES.add(new Country("sa", "Saudi Arabia (‫المملكة العربية السعودية‬‎)", 966));
-        COUNTRIES.add(new Country("sn", "Senegal (Sénégal)", 221));
-        COUNTRIES.add(new Country("rs", "Serbia (Србија)", 381));
-        COUNTRIES.add(new Country("sc", "Seychelles", 248));
-        COUNTRIES.add(new Country("sl", "Sierra Leone", 232));
-        COUNTRIES.add(new Country("sg", "Singapore", 65));
-        COUNTRIES.add(new Country("sx", "Sint Maarten", 1721));
-        COUNTRIES.add(new Country("sk", "Slovakia (Slovensko)", 421));
-        COUNTRIES.add(new Country("si", "Slovenia (Slovenija)", 386));
-        COUNTRIES.add(new Country("sb", "Solomon Islands", 677));
-        COUNTRIES.add(new Country("so", "Somalia (Soomaaliya)", 252));
-        COUNTRIES.add(new Country("za", "South Africa", 27));
-        COUNTRIES.add(new Country("kr", "South Korea (대한민국)", 82));
-        COUNTRIES.add(new Country("ss", "South Sudan (‫جنوب السودان‬‎)", 211));
-        COUNTRIES.add(new Country("es", "Spain (España)", 34));
-        COUNTRIES.add(new Country("lk", "Sri Lanka (ශ්‍රී ලංකාව)", 94));
-        COUNTRIES.add(new Country("sd", "Sudan (‫السودان‬‎)", 249));
-        COUNTRIES.add(new Country("sr", "Suriname", 597));
-        COUNTRIES.add(new Country("sj", "Svalbard and Jan Mayen", 47));
-        COUNTRIES.add(new Country("sz", "Swaziland", 268));
-        COUNTRIES.add(new Country("se", "Sweden (Sverige)", 46));
-        COUNTRIES.add(new Country("ch", "Switzerland (Schweiz)", 41));
-        COUNTRIES.add(new Country("sy", "Syria (‫سوريا‬‎)", 963));
-        COUNTRIES.add(new Country("tw", "Taiwan (台灣)", 886));
-        COUNTRIES.add(new Country("tj", "Tajikistan", 992));
-        COUNTRIES.add(new Country("tz", "Tanzania", 255));
-        COUNTRIES.add(new Country("th", "Thailand (ไทย)", 66));
-        COUNTRIES.add(new Country("tl", "Timor-Leste", 670));
-        COUNTRIES.add(new Country("tg", "Togo", 228));
-        COUNTRIES.add(new Country("tk", "Tokelau", 690));
-        COUNTRIES.add(new Country("to", "Tonga", 676));
-        COUNTRIES.add(new Country("tt", "Trinidad and Tobago", 1868));
-        COUNTRIES.add(new Country("tn", "Tunisia (‫تونس‬‎)", 216));
-        COUNTRIES.add(new Country("tr", "Turkey (Türkiye)", 90));
-        COUNTRIES.add(new Country("tm", "Turkmenistan", 993));
-        COUNTRIES.add(new Country("tc", "Turks and Caicos Islands", 1649));
-        COUNTRIES.add(new Country("tv", "Tuvalu", 688));
-        COUNTRIES.add(new Country("vi", "U.S. Virgin Islands", 1340));
-        COUNTRIES.add(new Country("ug", "Uganda", 256));
-        COUNTRIES.add(new Country("ua", "Ukraine (Україна)", 380));
-        COUNTRIES.add(new Country("ae", "United Arab Emirates (‫الإمارات العربية المتحدة‬‎)", 971));
-        COUNTRIES.add(new Country("gb", "United Kingdom", 44));
-        COUNTRIES.add(new Country("us", "United States", 1));
-        COUNTRIES.add(new Country("uy", "Uruguay", 598));
-        COUNTRIES.add(new Country("uz", "Uzbekistan (Oʻzbekiston)", 998));
-        COUNTRIES.add(new Country("vu", "Vanuatu", 678));
-        COUNTRIES.add(new Country("va", "Vatican City (Città del Vaticano)", 39));
-        COUNTRIES.add(new Country("ve", "Venezuela", 58));
-        COUNTRIES.add(new Country("vn", "Vietnam (Việt Nam)", 84));
-        COUNTRIES.add(new Country("wf", "Wallis and Futuna", 681));
-        COUNTRIES.add(new Country("eh", "Western Sahara (‫الصحراء الغربية‬‎)", 212));
-        COUNTRIES.add(new Country("ye", "Yemen (‫اليمن‬‎)", 967));
-        COUNTRIES.add(new Country("zm", "Zambia", 260));
-        COUNTRIES.add(new Country("zw", "Zimbabwe", 263));
-        COUNTRIES.add(new Country("ax", "Åland Islands", 358));
+        COUNTRIES.put(1, Arrays.asList(
+            new Country("as", 1, false, Collections.singletonList("684")),
+            new Country("ai", 1, false, Collections.singletonList("264")),
+            new Country("ag", 1, false, Collections.singletonList("268")),
+            new Country("bs", 1, false, Collections.singletonList("242")),
+            new Country("bb", 1, false, Collections.singletonList("246")),
+            new Country("bm", 1, false, Collections.singletonList("441")),
+            new Country("vg", 1, false, Collections.singletonList("284")),
+            new Country("ca", 1, false, Arrays.asList(
+                "204",
+                "226",
+                "236",
+                "249",
+                "250",
+                "263",
+                "289",
+                "306",
+                "343",
+                "354",
+                "365",
+                "367",
+                "368",
+                "382",
+                "387",
+                "403",
+                "416",
+                "418",
+                "428",
+                "431",
+                "437",
+                "438",
+                "450",
+                "468",
+                "474",
+                "506",
+                "514",
+                "519",
+                "548",
+                "579",
+                "581",
+                "584",
+                "587",
+                "604",
+                "613",
+                "639",
+                "647",
+                "672",
+                "683",
+                "705",
+                "709",
+                "742",
+                "753",
+                "778",
+                "780",
+                "782",
+                "807",
+                "819",
+                "825",
+                "867",
+                "873",
+                "879",
+                "902",
+                "905",
+                "942"
+            )),
+            new Country("ky", 1, false, Collections.singletonList("345")),
+            new Country("dm", 1, false, Collections.singletonList("767")),
+            new Country("do", 1, false, Arrays.asList(
+                "809",
+                "829",
+                "849"
+            )),
+            new Country("gd", 1, false, Collections.singletonList("473")),
+            new Country("gu", 1, false, Collections.singletonList("671")),
+            new Country("jm", 1, false, Arrays.asList(
+                "658",
+                "876"
+            )),
+            new Country("ms", 1, false, Collections.singletonList("664")),
+            new Country("mp", 1, false, Collections.singletonList("670")),
+            new Country("pr", 1, false, Arrays.asList(
+                "787",
+                "939"
+            )),
+            new Country("kn", 1, false, Collections.singletonList("869")),
+            new Country("lc", 1, false, Collections.singletonList("758")),
+            new Country("vc", 1, false, Collections.singletonList("784")),
+            new Country("sx", 1, false, Collections.singletonList("721")),
+            new Country("tt", 1, false, Collections.singletonList("868")),
+            new Country("tc", 1, false, Collections.singletonList("649")),
+            new Country("vi", 1, false, Collections.singletonList("340")),
+            new Country("us", 1, true, Arrays.asList(
+                "201",
+                "202",
+                "203",
+                "205",
+                "206",
+                "207",
+                "208",
+                "209",
+                "210",
+                "212",
+                "213",
+                "214",
+                "215",
+                "216",
+                "217",
+                "218",
+                "219",
+                "220",
+                "223",
+                "224",
+                "225",
+                "227",
+                "228",
+                "229",
+                "231",
+                "234",
+                "239",
+                "240",
+                "248",
+                "250",
+                "251",
+                "252",
+                "253",
+                "254",
+                "256",
+                "260",
+                "262",
+                "267",
+                "269",
+                "270",
+                "272",
+                "274",
+                "276",
+                "279",
+                "281",
+                "301",
+                "302",
+                "303",
+                "304",
+                "305",
+                "307",
+                "308",
+                "309",
+                "310",
+                "312",
+                "313",
+                "314",
+                "315",
+                "316",
+                "317",
+                "318",
+                "319",
+                "320",
+                "321",
+                "323",
+                "325",
+                "326",
+                "327",
+                "330",
+                "331",
+                "332",
+                "334",
+                "336",
+                "337",
+                "339",
+                "341",
+                "346",
+                "347",
+                "351",
+                "352",
+                "360",
+                "361",
+                "364",
+                "380",
+                "385",
+                "386",
+                "401",
+                "402",
+                "404",
+                "405",
+                "406",
+                "407",
+                "408",
+                "409",
+                "410",
+                "412",
+                "413",
+                "414",
+                "415",
+                "417",
+                "419",
+                "423",
+                "424",
+                "425",
+                "430",
+                "432",
+                "434",
+                "435",
+                "440",
+                "442",
+                "443",
+                "445",
+                "447",
+                "458",
+                "463",
+                "464",
+                "469",
+                "470",
+                "475",
+                "478",
+                "479",
+                "480",
+                "484",
+                "501",
+                "502",
+                "503",
+                "504",
+                "505",
+                "507",
+                "508",
+                "509",
+                "510",
+                "512",
+                "513",
+                "515",
+                "516",
+                "517",
+                "518",
+                "520",
+                "530",
+                "531",
+                "534",
+                "539",
+                "540",
+                "541",
+                "551",
+                "559",
+                "561",
+                "562",
+                "563",
+                "564",
+                "567",
+                "570",
+                "571",
+                "573",
+                "574",
+                "575",
+                "580",
+                "585",
+                "586",
+                "601",
+                "602",
+                "603",
+                "605",
+                "606",
+                "607",
+                "608",
+                "609",
+                "610",
+                "612",
+                "614",
+                "615",
+                "616",
+                "617",
+                "618",
+                "619",
+                "620",
+                "623",
+                "626",
+                "628",
+                "629",
+                "630",
+                "631",
+                "636",
+                "640",
+                "641",
+                "646",
+                "650",
+                "651",
+                "657",
+                "659",
+                "660",
+                "661",
+                "662",
+                "667",
+                "669",
+                "678",
+                "680",
+                "681",
+                "682",
+                "689",
+                "701",
+                "702",
+                "703",
+                "704",
+                "706",
+                "707",
+                "708",
+                "712",
+                "713",
+                "714",
+                "715",
+                "716",
+                "717",
+                "718",
+                "719",
+                "720",
+                "724",
+                "725",
+                "726",
+                "727",
+                "730",
+                "731",
+                "732",
+                "734",
+                "737",
+                "740",
+                "743",
+                "747",
+                "754",
+                "757",
+                "760",
+                "762",
+                "763",
+                "765",
+                "769",
+                "770",
+                "772",
+                "773",
+                "774",
+                "775",
+                "779",
+                "781",
+                "785",
+                "786",
+                "801",
+                "802",
+                "803",
+                "804",
+                "805",
+                "806",
+                "808",
+                "810",
+                "812",
+                "813",
+                "814",
+                "815",
+                "816",
+                "817",
+                "818",
+                "820",
+                "828",
+                "830",
+                "831",
+                "832",
+                "838",
+                "843",
+                "845",
+                "847",
+                "848",
+                "850",
+                "854",
+                "856",
+                "857",
+                "858",
+                "859",
+                "860",
+                "862",
+                "863",
+                "864",
+                "865",
+                "870",
+                "872",
+                "878",
+                "901",
+                "903",
+                "904",
+                "906",
+                "907",
+                "908",
+                "910",
+                "912",
+                "913",
+                "914",
+                "915",
+                "917",
+                "918",
+                "919",
+                "920",
+                "928",
+                "929",
+                "930",
+                "931",
+                "934",
+                "936",
+                "937",
+                "938",
+                "940",
+                "941",
+                "947",
+                "952",
+                "954",
+                "956",
+                "959",
+                "970",
+                "971",
+                "972",
+                "973",
+                "978",
+                "979",
+                "980",
+                "984",
+                "985",
+                "986",
+                "989"
+            ))
+        ));
+        COUNTRIES.put(7, Arrays.asList(
+            new Country("kz", 7, false, Arrays.asList(
+                "6",
+                "7"
+            )),
+            new Country("ru", 7, true)
+        ));
+        COUNTRIES.put(20, Collections.singletonList(new Country("eg", 20, true)));
+        COUNTRIES.put(27, Collections.singletonList(new Country("za", 27, true)));
+        COUNTRIES.put(30, Collections.singletonList(new Country("gr", 30, true)));
+        COUNTRIES.put(31, Collections.singletonList(new Country("nl", 31, true)));
+        COUNTRIES.put(32, Collections.singletonList(new Country("be", 32, true)));
+        COUNTRIES.put(33, Collections.singletonList(new Country("fr", 33, true)));
+        COUNTRIES.put(34, Collections.singletonList(new Country("es", 34, true)));
+        COUNTRIES.put(36, Collections.singletonList(new Country("hu", 36, true)));
+        COUNTRIES.put(39, Arrays.asList(
+            new Country("va", 39, false, Collections.singletonList("06698")),
+            new Country("it", 39, true)
+        ));
+        COUNTRIES.put(40, Collections.singletonList(new Country("ro", 40, true)));
+        COUNTRIES.put(41, Collections.singletonList(new Country("ch", 41, true)));
+        COUNTRIES.put(43, Collections.singletonList(new Country("at", 43, true)));
+        COUNTRIES.put(44, Arrays.asList(
+            new Country("gg", 44, false, Arrays.asList(
+                "1481",
+                "7781",
+                "7839",
+                "7911"
+            )),
+            new Country("im", 44, false, Arrays.asList(
+                "1624",
+                "7524",
+                "7624",
+                "7924"
+            )),
+            new Country("je", 44, false, Collections.singletonList("1534")),
+            new Country("gb", 44, true)
+        ));
+        COUNTRIES.put(45, Collections.singletonList(new Country("dk", 45, true)));
+        COUNTRIES.put(46, Collections.singletonList(new Country("se", 46, true)));
+        COUNTRIES.put(47, Arrays.asList(
+            new Country("sj", 47, false, Collections.singletonList("79")),
+            new Country("no", 47, true)
+        ));
+        COUNTRIES.put(48, Collections.singletonList(new Country("pl", 48, true)));
+        COUNTRIES.put(49, Collections.singletonList(new Country("de", 49, true)));
+        COUNTRIES.put(51, Collections.singletonList(new Country("pe", 51, true)));
+        COUNTRIES.put(52, Collections.singletonList(new Country("mx", 52, true)));
+        COUNTRIES.put(53, Collections.singletonList(new Country("cu", 53, true)));
+        COUNTRIES.put(54, Collections.singletonList(new Country("ar", 54, true)));
+        COUNTRIES.put(55, Collections.singletonList(new Country("br", 55, true)));
+        COUNTRIES.put(56, Collections.singletonList(new Country("cl", 56, true)));
+        COUNTRIES.put(57, Collections.singletonList(new Country("co", 57, true)));
+        COUNTRIES.put(58, Collections.singletonList(new Country("ve", 58, true)));
+        COUNTRIES.put(60, Collections.singletonList(new Country("my", 60, true)));
+        COUNTRIES.put(61, Arrays.asList(
+            new Country("cx", 61, false, Collections.singletonList("89164")),
+            new Country("cc", 61, false, Collections.singletonList("89162")),
+            new Country("au", 61, true)
+        ));
+        COUNTRIES.put(62, Collections.singletonList(new Country("id", 62, true)));
+        COUNTRIES.put(63, Collections.singletonList(new Country("ph", 63, true)));
+        COUNTRIES.put(64, Collections.singletonList(new Country("nz", 64, true)));
+        COUNTRIES.put(65, Collections.singletonList(new Country("sg", 65, true)));
+        COUNTRIES.put(66, Collections.singletonList(new Country("th", 66, true)));
+        COUNTRIES.put(81, Collections.singletonList(new Country("jp", 81, true)));
+        COUNTRIES.put(82, Collections.singletonList(new Country("kr", 82, true)));
+        COUNTRIES.put(84, Collections.singletonList(new Country("vn", 84, true)));
+        COUNTRIES.put(86, Collections.singletonList(new Country("cn", 86, true)));
+        COUNTRIES.put(90, Collections.singletonList(new Country("tr", 90, true)));
+        COUNTRIES.put(91, Collections.singletonList(new Country("in", 91, true)));
+        COUNTRIES.put(92, Collections.singletonList(new Country("pk", 92, true)));
+        COUNTRIES.put(93, Collections.singletonList(new Country("af", 93, true)));
+        COUNTRIES.put(94, Collections.singletonList(new Country("lk", 94, true)));
+        COUNTRIES.put(95, Collections.singletonList(new Country("mm", 95, true)));
+        COUNTRIES.put(98, Collections.singletonList(new Country("ir", 98, true)));
+        COUNTRIES.put(211, Collections.singletonList(new Country("ss", 211, true)));
+        COUNTRIES.put(212, Arrays.asList(
+            new Country("eh", 212, false),
+            new Country("ma", 212, true)
+        ));
+        COUNTRIES.put(213, Collections.singletonList(new Country("dz", 213, true)));
+        COUNTRIES.put(216, Collections.singletonList(new Country("tn", 216, true)));
+        COUNTRIES.put(218, Collections.singletonList(new Country("ly", 218, true)));
+        COUNTRIES.put(220, Collections.singletonList(new Country("gm", 220, true)));
+        COUNTRIES.put(221, Collections.singletonList(new Country("sn", 221, true)));
+        COUNTRIES.put(222, Collections.singletonList(new Country("mr", 222, true)));
+        COUNTRIES.put(223, Collections.singletonList(new Country("ml", 223, true)));
+        COUNTRIES.put(224, Collections.singletonList(new Country("gn", 224, true)));
+        COUNTRIES.put(225, Collections.singletonList(new Country("ci", 225, true)));
+        COUNTRIES.put(226, Collections.singletonList(new Country("bf", 226, true)));
+        COUNTRIES.put(227, Collections.singletonList(new Country("ne", 227, true)));
+        COUNTRIES.put(228, Collections.singletonList(new Country("tg", 228, true)));
+        COUNTRIES.put(229, Collections.singletonList(new Country("bj", 229, true)));
+        COUNTRIES.put(230, Collections.singletonList(new Country("mu", 230, true)));
+        COUNTRIES.put(231, Collections.singletonList(new Country("lr", 231, true)));
+        COUNTRIES.put(232, Collections.singletonList(new Country("sl", 232, true)));
+        COUNTRIES.put(233, Collections.singletonList(new Country("gh", 233, true)));
+        COUNTRIES.put(234, Collections.singletonList(new Country("ng", 234, true)));
+        COUNTRIES.put(235, Collections.singletonList(new Country("td", 235, true)));
+        COUNTRIES.put(236, Collections.singletonList(new Country("cf", 236, true)));
+        COUNTRIES.put(237, Collections.singletonList(new Country("cm", 237, true)));
+        COUNTRIES.put(238, Collections.singletonList(new Country("cv", 238, true)));
+        COUNTRIES.put(239, Collections.singletonList(new Country("st", 239, true)));
+        COUNTRIES.put(240, Collections.singletonList(new Country("gq", 240, true)));
+        COUNTRIES.put(241, Collections.singletonList(new Country("ga", 241, true)));
+        COUNTRIES.put(242, Collections.singletonList(new Country("cg", 242, true)));
+        COUNTRIES.put(243, Collections.singletonList(new Country("cd", 243, true)));
+        COUNTRIES.put(244, Collections.singletonList(new Country("ao", 244, true)));
+        COUNTRIES.put(245, Collections.singletonList(new Country("gw", 245, true)));
+        COUNTRIES.put(246, Collections.singletonList(new Country("io", 246, true)));
+        COUNTRIES.put(248, Collections.singletonList(new Country("sc", 248, true)));
+        COUNTRIES.put(249, Collections.singletonList(new Country("sd", 249, true)));
+        COUNTRIES.put(250, Collections.singletonList(new Country("rw", 250, true)));
+        COUNTRIES.put(251, Collections.singletonList(new Country("et", 251, true)));
+        COUNTRIES.put(252, Collections.singletonList(new Country("so", 252, true)));
+        COUNTRIES.put(253, Collections.singletonList(new Country("dj", 253, true)));
+        COUNTRIES.put(254, Collections.singletonList(new Country("ke", 254, true)));
+        COUNTRIES.put(255, Collections.singletonList(new Country("tz", 255, true)));
+        COUNTRIES.put(256, Collections.singletonList(new Country("ug", 256, true)));
+        COUNTRIES.put(257, Collections.singletonList(new Country("bi", 257, true)));
+        COUNTRIES.put(258, Collections.singletonList(new Country("mz", 258, true)));
+        COUNTRIES.put(260, Collections.singletonList(new Country("zm", 260, true)));
+        COUNTRIES.put(261, Collections.singletonList(new Country("mg", 261, true)));
+        COUNTRIES.put(262, Arrays.asList(
+            new Country("yt", 262, false, Arrays.asList(
+                "269",
+                "639"
+            )),
+            new Country("re", 262, true)
+        ));
+        COUNTRIES.put(263, Collections.singletonList(new Country("zw", 263, true)));
+        COUNTRIES.put(264, Collections.singletonList(new Country("na", 264, true)));
+        COUNTRIES.put(265, Collections.singletonList(new Country("mw", 265, true)));
+        COUNTRIES.put(266, Collections.singletonList(new Country("ls", 266, true)));
+        COUNTRIES.put(267, Collections.singletonList(new Country("bw", 267, true)));
+        COUNTRIES.put(268, Collections.singletonList(new Country("sz", 268, true)));
+        COUNTRIES.put(269, Collections.singletonList(new Country("km", 269, true)));
+        COUNTRIES.put(290, Collections.singletonList(new Country("sh", 290, true)));
+        COUNTRIES.put(291, Collections.singletonList(new Country("er", 291, true)));
+        COUNTRIES.put(297, Collections.singletonList(new Country("aw", 297, true)));
+        COUNTRIES.put(298, Collections.singletonList(new Country("fo", 298, true)));
+        COUNTRIES.put(299, Collections.singletonList(new Country("gl", 299, true)));
+        COUNTRIES.put(350, Collections.singletonList(new Country("gi", 350, true)));
+        COUNTRIES.put(351, Collections.singletonList(new Country("pt", 351, true)));
+        COUNTRIES.put(352, Collections.singletonList(new Country("lu", 352, true)));
+        COUNTRIES.put(353, Collections.singletonList(new Country("ie", 353, true)));
+        COUNTRIES.put(354, Collections.singletonList(new Country("is", 354, true)));
+        COUNTRIES.put(355, Collections.singletonList(new Country("al", 355, true)));
+        COUNTRIES.put(356, Collections.singletonList(new Country("mt", 356, true)));
+        COUNTRIES.put(357, Collections.singletonList(new Country("cy", 357, true)));
+        COUNTRIES.put(358, Arrays.asList(
+            new Country("ax", 358, false, Collections.singletonList("18")),
+            new Country("fi", 358, true)
+        ));
+        COUNTRIES.put(359, Collections.singletonList(new Country("bg", 359, true)));
+        COUNTRIES.put(370, Collections.singletonList(new Country("lt", 370, true)));
+        COUNTRIES.put(371, Collections.singletonList(new Country("lv", 371, true)));
+        COUNTRIES.put(372, Collections.singletonList(new Country("ee", 372, true)));
+        COUNTRIES.put(373, Collections.singletonList(new Country("md", 373, true)));
+        COUNTRIES.put(374, Collections.singletonList(new Country("am", 374, true)));
+        COUNTRIES.put(375, Collections.singletonList(new Country("by", 375, true)));
+        COUNTRIES.put(376, Collections.singletonList(new Country("ad", 376, true)));
+        COUNTRIES.put(377, Collections.singletonList(new Country("mc", 377, true)));
+        COUNTRIES.put(378, Collections.singletonList(new Country("sm", 378, true)));
+        COUNTRIES.put(380, Collections.singletonList(new Country("ua", 380, true)));
+        COUNTRIES.put(381, Collections.singletonList(new Country("rs", 381, true)));
+        COUNTRIES.put(382, Collections.singletonList(new Country("me", 382, true)));
+        COUNTRIES.put(385, Collections.singletonList(new Country("hr", 385, true)));
+        COUNTRIES.put(386, Collections.singletonList(new Country("si", 386, true)));
+        COUNTRIES.put(387, Collections.singletonList(new Country("ba", 387, true)));
+        COUNTRIES.put(389, Collections.singletonList(new Country("mk", 389, true)));
+        COUNTRIES.put(420, Collections.singletonList(new Country("cz", 420, true)));
+        COUNTRIES.put(421, Collections.singletonList(new Country("sk", 421, true)));
+        COUNTRIES.put(423, Collections.singletonList(new Country("li", 423, true)));
+        COUNTRIES.put(500, Collections.singletonList(new Country("fk", 500, true)));
+        COUNTRIES.put(501, Collections.singletonList(new Country("bz", 501, true)));
+        COUNTRIES.put(502, Collections.singletonList(new Country("gt", 502, true)));
+        COUNTRIES.put(503, Collections.singletonList(new Country("sv", 503, true)));
+        COUNTRIES.put(504, Collections.singletonList(new Country("hn", 504, true)));
+        COUNTRIES.put(505, Collections.singletonList(new Country("ni", 505, true)));
+        COUNTRIES.put(506, Collections.singletonList(new Country("cr", 506, true)));
+        COUNTRIES.put(507, Collections.singletonList(new Country("pa", 507, true)));
+        COUNTRIES.put(508, Collections.singletonList(new Country("pm", 508, true)));
+        COUNTRIES.put(509, Collections.singletonList(new Country("ht", 509, true)));
+        COUNTRIES.put(590, Arrays.asList(
+            new Country("bl", 590, false),
+            new Country("mf", 590, false),
+            new Country("gp", 590, true)
+        ));
+        COUNTRIES.put(591, Collections.singletonList(new Country("bo", 591, true)));
+        COUNTRIES.put(592, Collections.singletonList(new Country("gy", 592, true)));
+        COUNTRIES.put(593, Collections.singletonList(new Country("ec", 593, true)));
+        COUNTRIES.put(594, Collections.singletonList(new Country("gf", 594, true)));
+        COUNTRIES.put(595, Collections.singletonList(new Country("py", 595, true)));
+        COUNTRIES.put(596, Collections.singletonList(new Country("mq", 596, true)));
+        COUNTRIES.put(597, Collections.singletonList(new Country("sr", 597, true)));
+        COUNTRIES.put(598, Collections.singletonList(new Country("uy", 598, true)));
+        COUNTRIES.put(599, Arrays.asList(
+            new Country("cw", 599, false, Collections.singletonList("9")),
+            new Country("bq", 599, true, Arrays.asList(
+                "3",
+                "4",
+                "7"
+            ))
+        ));
+        COUNTRIES.put(670, Collections.singletonList(new Country("tl", 670, true)));
+        COUNTRIES.put(672, Collections.singletonList(new Country("nf", 672, true, Collections.singletonList("3"))));
+        COUNTRIES.put(673, Collections.singletonList(new Country("bn", 673, true)));
+        COUNTRIES.put(674, Collections.singletonList(new Country("nr", 674, true)));
+        COUNTRIES.put(675, Collections.singletonList(new Country("pg", 675, true)));
+        COUNTRIES.put(676, Collections.singletonList(new Country("to", 676, true)));
+        COUNTRIES.put(677, Collections.singletonList(new Country("sb", 677, true)));
+        COUNTRIES.put(678, Collections.singletonList(new Country("vu", 678, true)));
+        COUNTRIES.put(679, Collections.singletonList(new Country("fj", 679, true)));
+        COUNTRIES.put(680, Collections.singletonList(new Country("pw", 680, true)));
+        COUNTRIES.put(681, Collections.singletonList(new Country("wf", 681, true)));
+        COUNTRIES.put(682, Collections.singletonList(new Country("ck", 682, true)));
+        COUNTRIES.put(683, Collections.singletonList(new Country("nu", 683, true)));
+        COUNTRIES.put(685, Collections.singletonList(new Country("ws", 685, true)));
+        COUNTRIES.put(686, Collections.singletonList(new Country("ki", 686, true)));
+        COUNTRIES.put(687, Collections.singletonList(new Country("nc", 687, true)));
+        COUNTRIES.put(688, Collections.singletonList(new Country("tv", 688, true)));
+        COUNTRIES.put(689, Collections.singletonList(new Country("pf", 689, true)));
+        COUNTRIES.put(690, Collections.singletonList(new Country("tk", 690, true)));
+        COUNTRIES.put(691, Collections.singletonList(new Country("fm", 691, true)));
+        COUNTRIES.put(692, Collections.singletonList(new Country("mh", 692, true)));
+        COUNTRIES.put(850, Collections.singletonList(new Country("kp", 850, true)));
+        COUNTRIES.put(852, Collections.singletonList(new Country("hk", 852, true)));
+        COUNTRIES.put(853, Collections.singletonList(new Country("mo", 853, true)));
+        COUNTRIES.put(855, Collections.singletonList(new Country("kh", 855, true)));
+        COUNTRIES.put(856, Collections.singletonList(new Country("la", 856, true)));
+        COUNTRIES.put(880, Collections.singletonList(new Country("bd", 880, true)));
+        COUNTRIES.put(886, Collections.singletonList(new Country("tw", 886, true)));
+        COUNTRIES.put(960, Collections.singletonList(new Country("mv", 960, true)));
+        COUNTRIES.put(961, Collections.singletonList(new Country("lb", 961, true)));
+        COUNTRIES.put(962, Collections.singletonList(new Country("jo", 962, true)));
+        COUNTRIES.put(963, Collections.singletonList(new Country("sy", 963, true)));
+        COUNTRIES.put(964, Collections.singletonList(new Country("iq", 964, true)));
+        COUNTRIES.put(965, Collections.singletonList(new Country("kw", 965, true)));
+        COUNTRIES.put(966, Collections.singletonList(new Country("sa", 966, true)));
+        COUNTRIES.put(967, Collections.singletonList(new Country("ye", 967, true)));
+        COUNTRIES.put(968, Collections.singletonList(new Country("om", 968, true)));
+        COUNTRIES.put(970, Collections.singletonList(new Country("ps", 970, true)));
+        COUNTRIES.put(971, Collections.singletonList(new Country("ae", 971, true)));
+        COUNTRIES.put(972, Collections.singletonList(new Country("il", 972, true)));
+        COUNTRIES.put(973, Collections.singletonList(new Country("bh", 973, true)));
+        COUNTRIES.put(974, Collections.singletonList(new Country("qa", 974, true)));
+        COUNTRIES.put(975, Collections.singletonList(new Country("bt", 975, true)));
+        COUNTRIES.put(976, Collections.singletonList(new Country("mn", 976, true)));
+        COUNTRIES.put(977, Collections.singletonList(new Country("np", 977, true)));
+        COUNTRIES.put(992, Collections.singletonList(new Country("tj", 992, true)));
+        COUNTRIES.put(993, Collections.singletonList(new Country("tm", 993, true)));
+        COUNTRIES.put(994, Collections.singletonList(new Country("az", 994, true)));
+        COUNTRIES.put(995, Collections.singletonList(new Country("ge", 995, true)));
+        COUNTRIES.put(996, Collections.singletonList(new Country("kg", 996, true)));
+        COUNTRIES.put(998, Collections.singletonList(new Country("uz", 998, true)));
     }
 
 }

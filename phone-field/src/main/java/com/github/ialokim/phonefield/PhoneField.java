@@ -17,7 +17,9 @@ import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 import androidx.annotation.IdRes;
 
@@ -86,7 +88,12 @@ public abstract class PhoneField extends LinearLayout {
             throw new IllegalStateException("Please provide a valid xml layout");
         }
 
-        mAdapter = new CountriesAdapter(getContext(), Countries.COUNTRIES);
+        List<Country> countries = new ArrayList<>();
+        for (List<Country> c : Countries.COUNTRIES.values()) {
+            countries.addAll(c);
+        }
+
+        mAdapter = new CountriesAdapter(getContext(), countries);
         mAdapter.sort(new Comparator<Country>() {
             @Override
             public int compare(Country c1, Country c2) {
@@ -118,7 +125,7 @@ public abstract class PhoneField extends LinearLayout {
                     mSpinner.setSelection(mDefaultCountryPosition);
                 } else {
                     if (rawNumber.startsWith("00")) {
-                        rawNumber = rawNumber.replaceFirst("00", "+");
+                        rawNumber = rawNumber.replaceFirst("00", "+"); //todo: only valid for Europe??
                         mEditText.removeTextChangedListener(this);
                         mEditText.setText(rawNumber);
                         mEditText.addTextChangedListener(this);
@@ -126,9 +133,7 @@ public abstract class PhoneField extends LinearLayout {
                     }
                     try {
                         Phonenumber.PhoneNumber number = parsePhoneNumber(rawNumber);
-                        if (mCountry == null || mCountry.getDialCode() != number.getCountryCode()) {
-                            selectCountry(number.getCountryCode());
-                        }
+                        selectCountry(number.getCountryCode(), number.getNationalNumber());
                     } catch (NumberParseException ignored) {
                     }
                 }
@@ -219,20 +224,26 @@ public abstract class PhoneField extends LinearLayout {
      * @param countryCode the country code
      */
     public void setDefaultCountry(String countryCode) {
-        for (Country country : Countries.COUNTRIES) {
-            if (country.getCode().equalsIgnoreCase(countryCode)) {
-                mCountry = country;
-                mDefaultCountryPosition = mAdapter.getPosition(mCountry);
-                mSpinner.setSelection(mDefaultCountryPosition);
+        for (List<Country> countries : Countries.COUNTRIES.values()) {
+            for (Country country : countries) {
+                if (country.getCode().equalsIgnoreCase(countryCode)) {
+                    mCountry = country;
+                    mDefaultCountryPosition = mAdapter.getPosition(mCountry);
+                    mSpinner.setSelection(mDefaultCountryPosition);
+                }
             }
         }
     }
 
-    private void selectCountry(int dialCode) {
-        for (Country country : Countries.COUNTRIES) {
-            if (country.getDialCode() == dialCode) {
+    private void selectCountry(int dialCode, long number) {
+        List<Country> l = Countries.COUNTRIES.get(dialCode);
+        if (l == null)
+            return;
+        for (Country country : l) {
+            if (country.containsNumber(number)) {
                 mCountry = country;
                 mSpinner.setSelection(mAdapter.getPosition(mCountry));
+                return;
             }
         }
     }
@@ -245,9 +256,7 @@ public abstract class PhoneField extends LinearLayout {
     public void setPhoneNumber(String rawNumber) {
         try {
             Phonenumber.PhoneNumber number = parsePhoneNumber(rawNumber);
-            if (mCountry == null || mCountry.getDialCode() != number.getCountryCode()) {
-                selectCountry(number.getCountryCode());
-            }
+            selectCountry(number.getCountryCode(), number.getNationalNumber());
             mEditText.setText(mPhoneUtil.format(number, PhoneNumberUtil.PhoneNumberFormat.NATIONAL));
         } catch (NumberParseException ignored) {
         }

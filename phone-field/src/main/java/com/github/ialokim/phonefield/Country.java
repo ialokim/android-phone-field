@@ -3,6 +3,8 @@ package com.github.ialokim.phonefield;
 import android.content.Context;
 import android.content.res.Resources;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -14,26 +16,53 @@ public class Country {
 
     private final String mCode;
 
-    private final String mName;
-
     private final int mDialCode;
 
-    public Country(String code, String name, int dialCode) {
+    private final List<String> mAreaCodes;
+    private final int mAreaCodeLength;
+
+    private final boolean mPriority;
+
+    public Country(String code, int dialCode, boolean priority) {
+        this(code, dialCode, priority, new ArrayList<String>());
+    }
+    public Country(String code, int dialCode, boolean priority, List<String> areaCodes) {
         mCode = code;
-        mName = name;
         mDialCode = dialCode;
+        mAreaCodes = areaCodes;
+        if (areaCodes.size() == 0)
+            mAreaCodeLength = 0;
+        else
+            mAreaCodeLength = mAreaCodes.get(0).length();
+        mPriority = priority;
     }
 
     public String getCode() {
         return mCode;
     }
 
-    public String getName() {
-        return mName;
+    public String getDialCode() {
+        return getDialCode(false);
     }
 
-    public int getDialCode() {
-        return mDialCode;
+    public String getDialCode(boolean formatted) {
+        if (formatted) {
+            String code = "+" + mDialCode;
+            if (mAreaCodes.size() == 1)
+                code += " " + mAreaCodes.get(0);
+            return code;
+        }
+        return String.valueOf(mDialCode);
+    }
+
+    public boolean containsNumber(long number) {
+        String national = String.valueOf(number);
+        if (mAreaCodeLength > 0 && national.length() >= mAreaCodeLength) {
+            String areaCode = national.substring(0,mAreaCodeLength);
+            return mAreaCodes.contains(areaCode);
+        }
+
+        return mPriority;
     }
 
     public String getDisplayName() {
