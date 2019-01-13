@@ -44,9 +44,6 @@ public abstract class PhoneField extends LinearLayout {
     private boolean mAutoFill = false;
     private int mDefaultCountryPosition = -1;
 
-    private TextWatcher mTextWatcher;
-    private AdapterView.OnItemSelectedListener mSpinnerWatcher;
-
     /**
      * Instantiates a new Phone field.
      *
@@ -111,7 +108,7 @@ public abstract class PhoneField extends LinearLayout {
             }
         });
 
-        mTextWatcher = new TextWatcher() {
+        final TextWatcher textWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -144,11 +141,11 @@ public abstract class PhoneField extends LinearLayout {
             }
         };
 
-        mEditText.addTextChangedListener(mTextWatcher);
+        mEditText.addTextChangedListener(textWatcher);
 
         mSpinner.setAdapter(mAdapter);
 
-        mSpinnerWatcher = new AdapterView.OnItemSelectedListener() {
+        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Country country = mAdapter.getItem(position);
@@ -163,10 +160,9 @@ public abstract class PhoneField extends LinearLayout {
                         mEditText.setText(dialCode);
                         mEditText.setSelection(dialCode.length());
                     } else {
-                        mEditText.removeTextChangedListener(mTextWatcher);
                         mEditText.setText("");
-                        mEditText.addTextChangedListener(mTextWatcher);
                     }
+                    mEditText.setError(null);
                 }
             }
 
@@ -174,9 +170,7 @@ public abstract class PhoneField extends LinearLayout {
             public void onNothingSelected(AdapterView<?> parent) {
                 mCountry = null;
             }
-        };
-
-        mSpinner.setOnItemSelectedListener(mSpinnerWatcher);
+        });
 
     }
 
