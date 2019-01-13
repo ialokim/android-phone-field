@@ -2,10 +2,9 @@
 
 'use strict';
 
-var _ = require("lodash"),
-	_s = require("underscore.string"),
-	fs = require("fs"),
-	countries = require('./countries');
+var _s = require("underscore.string"),
+    fs = require("fs"),
+    countries = require('./countries');
 
 /**
  * Orders countries by dialCode (e.g. all NANP (North American Numbering Plan) under 1)
@@ -134,8 +133,8 @@ function generateCountriesClass(orderedCountries) {
             });
             a(end,8);
         }
-	});
-	a("}",4);
+    });
+    a("}",4);
     a();
     a("}");
 
