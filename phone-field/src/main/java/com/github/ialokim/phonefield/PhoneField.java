@@ -41,7 +41,11 @@ public abstract class PhoneField extends LinearLayout {
 
     private PhoneNumberUtil mPhoneUtil = PhoneNumberUtil.getInstance();
 
-    private int mDefaultCountryPosition = 0;
+    private boolean mAutoFill = false;
+    private int mDefaultCountryPosition = -1;
+
+    private TextWatcher mTextWatcher;
+    private AdapterView.OnItemSelectedListener mSpinnerWatcher;
 
     /**
      * Instantiates a new Phone field.
@@ -76,7 +80,6 @@ public abstract class PhoneField extends LinearLayout {
         prepareView();
         applyAttrs(attrs);
     }
-
     /**
      * Prepare view.
      */
@@ -108,7 +111,7 @@ public abstract class PhoneField extends LinearLayout {
             }
         });
 
-        final TextWatcher textWatcher = new TextWatcher() {
+        mTextWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -121,7 +124,8 @@ public abstract class PhoneField extends LinearLayout {
             @Override
             public void afterTextChanged(Editable s) {
                 String rawNumber = s.toString();
-                if (rawNumber.isEmpty()) {
+                if (mDefaultCountryPosition != -1 && rawNumber.isEmpty()) {
+                    mCountry = mAdapter.getItem(mDefaultCountryPosition);
                     mSpinner.setSelection(mDefaultCountryPosition);
                 } else {
                     if (rawNumber.startsWith("00")) {
@@ -129,7 +133,7 @@ public abstract class PhoneField extends LinearLayout {
                         mEditText.removeTextChangedListener(this);
                         mEditText.setText(rawNumber);
                         mEditText.addTextChangedListener(this);
-                        mEditText.setSelection(rawNumber.length());
+                        mEditText.setSelection(1);
                     }
                     try {
                         Phonenumber.PhoneNumber number = parsePhoneNumber(rawNumber);
@@ -140,20 +144,39 @@ public abstract class PhoneField extends LinearLayout {
             }
         };
 
-        mEditText.addTextChangedListener(textWatcher);
+        mEditText.addTextChangedListener(mTextWatcher);
 
         mSpinner.setAdapter(mAdapter);
-        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+        mSpinnerWatcher = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mCountry = mAdapter.getItem(position);
+                Country country = mAdapter.getItem(position);
+                if (mCountry == null || mCountry.equals(country))
+                    return;
+
+                mCountry = country;
+                String rawInput = getRawInput();
+                if (rawInput.startsWith("+") || rawInput.length() == 0) {
+                    if (mAutoFill) {
+                        String dialCode = mCountry.getDialCode(true);
+                        mEditText.setText(dialCode);
+                        mEditText.setSelection(dialCode.length());
+                    } else {
+                        mEditText.removeTextChangedListener(mTextWatcher);
+                        mEditText.setText("");
+                        mEditText.addTextChangedListener(mTextWatcher);
+                    }
+                }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 mCountry = null;
             }
-        });
+        };
+
+        mSpinner.setOnItemSelectedListener(mSpinnerWatcher);
 
     }
 
@@ -161,10 +184,13 @@ public abstract class PhoneField extends LinearLayout {
         TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.PhoneField);
         @IdRes int hint = ta.getResourceId(R.styleable.PhoneField_hint, -1);
         String defaultCountry = ta.getString(R.styleable.PhoneField_defaultCountry);
+        boolean autoFill = ta.getBoolean(R.styleable.PhoneField_autoFill, false);
         if (hint != -1)
             setHint(hint);
         if (defaultCountry != null)
             setDefaultCountry(defaultCountry);
+        if (autoFill)
+            setAutoFill(autoFill);
         ta.recycle();
     }
 
@@ -286,6 +312,15 @@ public abstract class PhoneField extends LinearLayout {
      */
     public void setHint(int resId) {
         mEditText.setHint(resId);
+    }
+
+    /**
+     * Sets the autofill property.
+     *
+     * @param autoFill whether the dialCode should be inserted automatically when changing the country
+     */
+    public void setAutoFill(boolean autoFill) {
+        mAutoFill = autoFill;
     }
 
     /**
