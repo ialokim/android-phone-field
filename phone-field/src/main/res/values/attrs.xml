@@ -4,5 +4,6 @@
         <attr name="hint" format="string"/>
         <attr name="defaultCountry" format="string"/>
         <attr name="autoFill" format="boolean"/>
+        <attr name="autoFormat" format="boolean"/>
     </declare-styleable>
 </resources>

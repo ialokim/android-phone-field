@@ -41,7 +41,10 @@ public abstract class PhoneField extends LinearLayout {
 
     private PhoneNumberUtil mPhoneUtil = PhoneNumberUtil.getInstance();
 
+    private PhoneNumberFormattingTextWatcher mPhoneNumberFormatterTextWatcher;
+
     private boolean mAutoFill = false;
+    private boolean mAutoFormat = false;
     private int mDefaultCountryPosition = -1;
 
     /**
@@ -121,9 +124,8 @@ public abstract class PhoneField extends LinearLayout {
             @Override
             public void afterTextChanged(Editable s) {
                 String rawNumber = s.toString();
-                if (mDefaultCountryPosition != -1 && rawNumber.isEmpty()) {
-                    mCountry = mAdapter.getItem(mDefaultCountryPosition);
-                    mSpinner.setSelection(mDefaultCountryPosition);
+                if (rawNumber.isEmpty()) {
+                    selectDefaultCountry();
                 } else {
                     if (rawNumber.startsWith("00")) {
                         rawNumber = rawNumber.replaceFirst("00", "+"); //todo: only valid for Europe??
@@ -152,7 +154,8 @@ public abstract class PhoneField extends LinearLayout {
                 if (mCountry == null || mCountry.equals(country))
                     return;
 
-                mCountry = country;
+                mEditText.setError(null);
+                selectCountry(country);
                 String rawInput = getRawInput();
                 if (rawInput.startsWith("+") || rawInput.length() == 0) {
                     if (mAutoFill) {
@@ -160,9 +163,15 @@ public abstract class PhoneField extends LinearLayout {
                         mEditText.setText(dialCode);
                         mEditText.setSelection(dialCode.length());
                     } else {
+                        mEditText.removeTextChangedListener(textWatcher);
                         mEditText.setText("");
+                        mEditText.addTextChangedListener(textWatcher);
                     }
-                    mEditText.setError(null);
+                } else if (mAutoFormat) {
+                    mEditText.removeTextChangedListener(textWatcher);
+                    mEditText.setText(rawInput);
+                    mEditText.setSelection(mEditText.getText().length());
+                    mEditText.addTextChangedListener(textWatcher);
                 }
             }
 
@@ -179,13 +188,17 @@ public abstract class PhoneField extends LinearLayout {
         @IdRes int hint = ta.getResourceId(R.styleable.PhoneField_hint, -1);
         String defaultCountry = ta.getString(R.styleable.PhoneField_defaultCountry);
         boolean autoFill = ta.getBoolean(R.styleable.PhoneField_autoFill, false);
+        boolean autoFormat = ta.getBoolean(R.styleable.PhoneField_autoFormat, false);
         if (hint != -1)
             setHint(hint);
         if (defaultCountry != null)
             setDefaultCountry(defaultCountry);
         if (autoFill)
             setAutoFill(autoFill);
+        if (autoFormat)
+            setAutoFormat(autoFormat);
         ta.recycle();
+        selectDefaultCountry();
     }
 
     /**
@@ -247,9 +260,7 @@ public abstract class PhoneField extends LinearLayout {
         for (List<Country> countries : Countries.COUNTRIES.values()) {
             for (Country country : countries) {
                 if (country.getCode().equalsIgnoreCase(countryCode)) {
-                    mCountry = country;
-                    mDefaultCountryPosition = mAdapter.getPosition(mCountry);
-                    mSpinner.setSelection(mDefaultCountryPosition);
+                    mDefaultCountryPosition = mAdapter.getPosition(country);
                 }
             }
         }
@@ -261,10 +272,22 @@ public abstract class PhoneField extends LinearLayout {
             return;
         for (Country country : l) {
             if (country.containsNumber(number)) {
-                mCountry = country;
-                mSpinner.setSelection(mAdapter.getPosition(mCountry));
+                selectCountry(country);
                 return;
             }
+        }
+    }
+
+    private void selectCountry(Country country) {
+        mCountry = country;
+        if (mAutoFormat)
+            mPhoneNumberFormatterTextWatcher.setCountry(mCountry.getCode());
+        mSpinner.setSelection(mAdapter.getPosition(mCountry));
+    }
+
+    private void selectDefaultCountry() {
+        if (mDefaultCountryPosition != -1) {
+            selectCountry(mAdapter.getItem(mDefaultCountryPosition));
         }
     }
 
@@ -318,12 +341,25 @@ public abstract class PhoneField extends LinearLayout {
     }
 
     /**
+     * Sets the autoformat property.
+     *
+     * @param autoFormat whether the dialCode should be formatted automatically
+     */
+    public void setAutoFormat(boolean autoFormat) {
+        mAutoFormat = autoFormat;
+        if (mAutoFormat) {
+            mPhoneNumberFormatterTextWatcher = new PhoneNumberFormattingTextWatcher();
+            mEditText.addTextChangedListener(mPhoneNumberFormatterTextWatcher);
+        }
+    }
+
+    /**
      * Gets raw input.
      *
      * @return the raw input
      */
     public String getRawInput() {
-        return mEditText.getText().toString();
+        return mAutoFormat ? mPhoneNumberFormatterTextWatcher.getRawPhoneNumber() : mEditText.getText().toString();
     }
 
     /**

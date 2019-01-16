@@ -18,7 +18,8 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         app:hint="@string/phone_hint_input_layout"
-        app:defaultCountry="DE" />
+        app:defaultCountry="DE"
+        app:autoFormat="true" />
 
     <Button
         android:id="@+id/submit_button_input_layout"
