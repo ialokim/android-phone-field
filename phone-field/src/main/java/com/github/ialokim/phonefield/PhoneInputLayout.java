@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 /**
  * Implementation of PhoneField that uses {@link TextInputLayout}
  * Created by Ismail on 5/6/16.
+ * Adapted by ialokim in 2019.
  */
 public class PhoneInputLayout extends PhoneField {
 

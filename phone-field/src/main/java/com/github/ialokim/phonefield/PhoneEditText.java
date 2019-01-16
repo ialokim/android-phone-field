@@ -9,6 +9,7 @@ import android.widget.EditText;
 /**
  * Implementation of PhoneField that uses an {@link EditText}
  * Created by Ismail on 5/6/16.
+ * Adapted by ialokim in 2019.
  */
 public class PhoneEditText extends PhoneField {
 

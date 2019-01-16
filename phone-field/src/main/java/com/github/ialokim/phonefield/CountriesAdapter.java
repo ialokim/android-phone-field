@@ -14,6 +14,7 @@ import java.util.List;
 /**
  * Adapter for the countries list spinner
  * Created by Ismail on 5/6/16.
+ * Adapted by ialokim in 2019.
  */
 public class CountriesAdapter extends ArrayAdapter<Country> implements SpinnerAdapter {
 

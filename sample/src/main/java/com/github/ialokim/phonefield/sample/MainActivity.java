@@ -13,6 +13,9 @@ import android.widget.Toast;
 import com.github.ialokim.phonefield.PhoneEditText;
 import com.github.ialokim.phonefield.PhoneInputLayout;
 
+/**
+ * MainActivity for the sample app featuring the usage of android-phone-field.
+ */
 public class MainActivity extends AppCompatActivity {
 
     @Override

@@ -25,9 +25,10 @@ import androidx.annotation.IdRes;
 
 /**
  * PhoneField is a custom view for phone numbers with the corresponding country flag, and it uses
- * libphonenumber to validate the phone number.
+ * libphonenumber to validate and format the phone number.
  * <p>
  * Created by Ismail on 5/6/16.
+ * Modified and enhanced by ialokim in 2019.
  */
 public abstract class PhoneField extends LinearLayout {
 
@@ -275,6 +276,7 @@ public abstract class PhoneField extends LinearLayout {
 
     /**
      * Gets phone number formatted as E164, whenever possible.
+     * Please refer to {@code getRawInput()} if you are interested in the raw string.
      *
      * @return the phone number or {@code null} if it could not be parsed
      */
@@ -366,9 +368,9 @@ public abstract class PhoneField extends LinearLayout {
     }
 
     /**
-     * Sets error.
+     * Sets or removes the error.
      *
-     * @param error the error
+     * @param error {@code null} to remove the error or a message that will be shown as error
      */
     public abstract void setError(String error);
 

@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 import com.github.ialokim.phonefield.PhoneInputLayout;
 
 /**
- * Custom PhoneInputLayout that allows users
+ * Custom PhoneInputLayout that allows users to add custom enhancements
  * Created by Ismail on 8/30/16.
  */
 

@@ -8,9 +8,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Country object that holds the country iso2 code, name, and dial code.
- *
- * @author Ismail Almetwally
+ * Country object that holds the country iso2 code, dial code, a list of known area codes and it's priority.
  */
 public class Country {
 
