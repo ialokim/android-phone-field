@@ -35,7 +35,7 @@ public abstract class PhoneField extends LinearLayout {
 
     private CountriesAdapter mAdapter;
 
-    private EditText mEditText;
+    protected EditText mEditText;
 
     private Country mCountry;
 
@@ -154,7 +154,7 @@ public abstract class PhoneField extends LinearLayout {
                 if (mCountry == null || mCountry.equals(country))
                     return;
 
-                mEditText.setError(null);
+                setError(null);
                 selectCountry(country);
                 String rawInput = getRawInput();
                 if (rawInput.startsWith("+") || rawInput.length() == 0) {
@@ -201,6 +201,42 @@ public abstract class PhoneField extends LinearLayout {
         selectDefaultCountry();
     }
 
+    private Phonenumber.PhoneNumber parsePhoneNumber(String number) throws NumberParseException {
+        String defaultRegion = mCountry != null ? mCountry.getCode().toUpperCase() : "";
+        return mPhoneUtil.parseAndKeepRawInput(number, defaultRegion);
+    }
+
+    private void selectCountry(int dialCode, long number) {
+        List<Country> l = Countries.COUNTRIES.get(dialCode);
+        if (l == null)
+            return;
+        for (Country country : l) {
+            if (country.containsNumber(number)) {
+                selectCountry(country);
+                return;
+            }
+        }
+    }
+
+    private void selectCountry(Country country) {
+        mCountry = country;
+        if (mAutoFormat)
+            mPhoneNumberFormatterTextWatcher.setCountry(mCountry.getCode());
+        mSpinner.setSelection(mAdapter.getPosition(mCountry));
+    }
+
+    private void selectDefaultCountry() {
+        if (mDefaultCountryPosition != -1) {
+            selectCountry(mAdapter.getItem(mDefaultCountryPosition));
+        }
+    }
+
+    private void hideKeyboard() {
+        ((InputMethodManager) getContext().getSystemService(
+                Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(mEditText.getWindowToken(), 0);
+    }
+
+
     /**
      * Gets spinner.
      *
@@ -232,23 +268,18 @@ public abstract class PhoneField extends LinearLayout {
         }
     }
 
-    private Phonenumber.PhoneNumber parsePhoneNumber(String number) throws NumberParseException {
-        String defaultRegion = mCountry != null ? mCountry.getCode().toUpperCase() : "";
-        return mPhoneUtil.parseAndKeepRawInput(number, defaultRegion);
-    }
-
     /**
-     * Gets phone number.
+     * Gets phone number formatted as E164, whenever possible.
      *
-     * @return the phone number
+     * @return the phone number or {@code null} if it could not be parsed
      */
-    public String getPhoneNumber() {
+    public String getE164PhoneNumber() {
         try {
             Phonenumber.PhoneNumber number = parsePhoneNumber(getRawInput());
             return mPhoneUtil.format(number, PhoneNumberUtil.PhoneNumberFormat.E164);
         } catch (NumberParseException ignored) {
         }
-        return getRawInput();
+        return null;
     }
 
     /**
@@ -266,31 +297,6 @@ public abstract class PhoneField extends LinearLayout {
         }
     }
 
-    private void selectCountry(int dialCode, long number) {
-        List<Country> l = Countries.COUNTRIES.get(dialCode);
-        if (l == null)
-            return;
-        for (Country country : l) {
-            if (country.containsNumber(number)) {
-                selectCountry(country);
-                return;
-            }
-        }
-    }
-
-    private void selectCountry(Country country) {
-        mCountry = country;
-        if (mAutoFormat)
-            mPhoneNumberFormatterTextWatcher.setCountry(mCountry.getCode());
-        mSpinner.setSelection(mAdapter.getPosition(mCountry));
-    }
-
-    private void selectDefaultCountry() {
-        if (mDefaultCountryPosition != -1) {
-            selectCountry(mAdapter.getItem(mDefaultCountryPosition));
-        }
-    }
-
     /**
      * Sets phone number.
      *
@@ -303,11 +309,6 @@ public abstract class PhoneField extends LinearLayout {
             mEditText.setText(mPhoneUtil.format(number, PhoneNumberUtil.PhoneNumberFormat.NATIONAL));
         } catch (NumberParseException ignored) {
         }
-    }
-
-    private void hideKeyboard() {
-        ((InputMethodManager) getContext().getSystemService(
-                Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(mEditText.getWindowToken(), 0);
     }
 
     /**
@@ -327,9 +328,7 @@ public abstract class PhoneField extends LinearLayout {
      *
      * @param resId the res id
      */
-    public void setHint(int resId) {
-        mEditText.setHint(resId);
-    }
+    public abstract void setHint(int resId);
 
     /**
      * Sets the autofill property.
@@ -367,17 +366,6 @@ public abstract class PhoneField extends LinearLayout {
      *
      * @param error the error
      */
-    public void setError(String error) {
-        mEditText.setError(error);
-    }
-
-    /**
-     * Sets text color.
-     *
-     * @param resId the res id
-     */
-    public void setTextColor(int resId) {
-        mEditText.setTextColor(resId);
-    }
+    public abstract void setError(String error);
 
 }

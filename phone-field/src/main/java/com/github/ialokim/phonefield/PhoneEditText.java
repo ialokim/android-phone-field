@@ -37,4 +37,14 @@ public class PhoneEditText extends PhoneField {
     public int getLayoutResId() {
         return R.layout.phone_edit_text;
     }
+
+    @Override
+    public void setHint(int resId) {
+        mEditText.setHint(resId);
+    }
+
+    @Override
+    public void setError(String error) {
+        mEditText.setError(error);
+    }
 }
