@@ -91,12 +91,7 @@ public abstract class PhoneField extends LinearLayout {
             throw new IllegalStateException("Please provide a valid xml layout");
         }
 
-        List<Country> countries = new ArrayList<>();
-        for (List<Country> c : Countries.COUNTRIES.values()) {
-            countries.addAll(c);
-        }
-
-        mAdapter = new CountriesAdapter(getContext(), countries);
+        mAdapter = new CountriesAdapter(getContext(), getCountriesAsList());
         mAdapter.sort(new Comparator<Country>() {
             @Override
             public int compare(Country c1, Country c2) {
@@ -236,6 +231,14 @@ public abstract class PhoneField extends LinearLayout {
                 Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(mEditText.getWindowToken(), 0);
     }
 
+    private List<Country> getCountriesAsList() {
+        List<Country> countries = new ArrayList<>();
+        for (List<Country> c : Countries.COUNTRIES.values()) {
+            countries.addAll(c);
+        }
+        return countries;
+    }
+
 
     /**
      * Gets spinner.
@@ -288,11 +291,10 @@ public abstract class PhoneField extends LinearLayout {
      * @param countryCode the country code
      */
     public void setDefaultCountry(String countryCode) {
-        for (List<Country> countries : Countries.COUNTRIES.values()) {
-            for (Country country : countries) {
-                if (country.getCode().equalsIgnoreCase(countryCode)) {
-                    mDefaultCountryPosition = mAdapter.getPosition(country);
-                }
+        for (Country country : getCountriesAsList()) {
+            if (country.getCode().equalsIgnoreCase(countryCode)) {
+                mDefaultCountryPosition = mAdapter.getPosition(country);
+                return;
             }
         }
     }
