@@ -131,7 +131,7 @@ public abstract class PhoneField extends LinearLayout {
                     }
                     try {
                         Phonenumber.PhoneNumber number = parsePhoneNumber(rawNumber);
-                        selectCountry(number.getCountryCode(), number.getNationalNumber());
+                        selectCountry(number);
                     } catch (NumberParseException ignored) {
                     }
                 }
@@ -201,12 +201,14 @@ public abstract class PhoneField extends LinearLayout {
         return mPhoneUtil.parseAndKeepRawInput(number, defaultRegion);
     }
 
-    private void selectCountry(int dialCode, long number) {
-        List<Country> l = Countries.COUNTRIES.get(dialCode);
+    private void selectCountry(Phonenumber.PhoneNumber number) {
+        if (number == null)
+            return;
+        List<Country> l = Countries.COUNTRIES.get(number.getCountryCode());
         if (l == null)
             return;
         for (Country country : l) {
-            if (country.containsNumber(number)) {
+            if (country.containsNumber(number.getNationalNumber())) {
                 selectCountry(country);
                 return;
             }
@@ -276,7 +278,7 @@ public abstract class PhoneField extends LinearLayout {
      *
      * @return the phone number or {@code null} if it could not be parsed
      */
-    public String getE164PhoneNumber() {
+    public String getPhoneNumberE164() {
         try {
             Phonenumber.PhoneNumber number = parsePhoneNumber(getRawInput());
             return mPhoneUtil.format(number, PhoneNumberUtil.PhoneNumberFormat.E164);
@@ -307,7 +309,7 @@ public abstract class PhoneField extends LinearLayout {
     public void setPhoneNumber(String rawNumber) {
         try {
             Phonenumber.PhoneNumber number = parsePhoneNumber(rawNumber);
-            selectCountry(number.getCountryCode(), number.getNationalNumber());
+            selectCountry(number);
             mEditText.setText(mPhoneUtil.format(number, PhoneNumberUtil.PhoneNumberFormat.NATIONAL));
         } catch (NumberParseException ignored) {
         }
