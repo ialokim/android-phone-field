@@ -8,19 +8,19 @@
         android:layout_gravity="top"
         android:dropDownWidth="@dimen/spinner_height"
         android:popupBackground="@color/pf_white"
-        android:tag="@string/com_lamudi_phonefield_flag_spinner" />
+        android:tag="@string/phonefield_flag_spinner" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:tag="@string/com_lamudi_phonefield_til_phone">
+        android:tag="@string/phonefield_til_phone">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="phone"
-            android:tag="@string/com_lamudi_phonefield_edittext"
+            android:tag="@string/phonefield_edittext"
             android:textColor="@color/pf_grey"
             android:textSize="@dimen/text_size" />
     </com.google.android.material.textfield.TextInputLayout>

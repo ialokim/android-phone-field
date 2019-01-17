@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Phone Field Example</string>
-    <string name="phone_hint_input_layout">Phone Number Input Layout</string>
-    <string name="phone_hint_edit_text">Phone Number Edit Text</string>
+    <string name="phone_hint_input_layout">Input Layout with auto format</string>
+    <string name="phone_hint_edit_text">Edit Text with auto fill</string>
     <string name="phone_hint_input_layout_code">Code generated Input Layout</string>
     <string name="submit">Submit</string>
     <string name="invalid_phone_number">Please enter a valid phone number.</string>
