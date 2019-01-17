@@ -8,8 +8,8 @@ android {
         applicationId "com.github.ialokim.phonefield.sample"
         minSdkVersion minSdk
         targetSdkVersion targetSdk
-        versionCode 1
-        versionName "1.0"
+        versionCode vCode
+        versionName vName
     }
     buildTypes {
         release {

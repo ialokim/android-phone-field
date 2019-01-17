@@ -1,109 +1,82 @@
 android-phone-field
 ===================
 
-android-phone-field is A small UI library that allows you to create phone fields with corresponding country flags, and validate the phone number using [libphonenumber](https://github.com/googlei18n/libphonenumber) from google.
+A small UI library that allows you to create phone fields with corresponding country flags which format and validate the phone number using [libphonenumber](https://github.com/googlei18n/libphonenumber) from google.
 
-![alt text](https://raw.githubusercontent.com/lamudi-gmbh/android-phone-field/master/raw/phone-field.gif "Sample App")
+![Sample App](raw/phone-field.gif "Sample App")
 
-The library has two different fields:
+The library provides two different fields:
 
- * PhoneEditText : includes EditText alongside the flags spinner
- * PhoneInputLayout : includes a TextInputLayout from the design support library alongside the flags spinner 
+ * `PhoneEditText` : includes an `EditText` alongside the flags spinner
+ * `PhoneInputLayout` : includes a `TextInputLayout` from the androidx.* (before known as support) library alongside the flags spinner
  
 ## Features
  
- * Displays the correct country flag if the user enters a valid international phone number
+ * Displays the correct country flag if the user enters a valid international phone number, with complete support even for the complex [NANP](https://en.wikipedia.org/wiki/North_American_Numbering_Plan) area codes which all start with `+1`
  * Allows the user to choose the country manually and only enter a national phone number
- * Allows you to choose a default country, which the field will change to automatically if the user chose a different country then cleared the field.
- * Validates the phone number 
+ * Allows you to choose a default country, which the field will change to automatically when the field is cleared
+ * Formats the phone number according to the currently chosen country with whitespaces, dashes and parentheses
+ * Validates the phone number, allows to set a custom error
  * Returns the valid phone number including the country code
  
 ## Usage
 
-In your module's gradle file add the following dependency, please make sure that you have jcenter in your repositories list
+You can easily add the library to your project using [jitpack.io](https://jitpack.io/#ialokim/android-phone-field/):
+
+* If not already done, add jitpack to your root `build.gradle` at the end of `repositories`:
 
 ```
-compile ('com.lamudi.phonefield:phone-field:0.1.3@aar') {
-    transitive = true
+allprojects {
+  repositories {
+    ...
+    maven { url 'https://jitpack.io' }
+  }
 }
 ```
 
- In your layout you can use the PhoneInputLayout 
+* In your module's gradle file add the following dependency
+
+```
+dependencies {
+    implementation 'com.github.ialokim.android-phone-field:phone-field:master-SNAPSHOT'
+}
+```
+
+ In your layout you can use the `PhoneInputLayout`
  
 ```xml
-<com.lamudi.phonefield.PhoneInputLayout
+<com.github.ialokim.phonefield.PhoneInputLayout
      android:id="@+id/phone_input_layout"
      android:layout_width="match_parent"
      android:layout_height="wrap_content"/>
 ```
  
- or the PhoneEditText
+ or the `PhoneEditText`
  
 ```xml
- <com.lamudi.phonefield.PhoneEditText
+ <com.github.ialokim.phonefield.PhoneEditText
      android:id="@+id/edit_text"
      android:layout_width="match_parent"
      android:layout_height="wrap_content"/>
 ```
 
-Then in your Activity/Fragment
+Both support the following xml attributes:
 
- 
-```java 
-final PhoneInputLayout phoneInputLayout = (PhoneInputLayout) findViewById(R.id.phone_input_layout);
-final PhoneEditText phoneEditText = (PhoneEditText) findViewById(R.id.edit_text);
-final Button button = (Button) findViewById(R.id.submit_button);
+* `hint`: Sets a string as hint displayed when field is empty
+* `defaultCountry`: Set the country that should be automatically selected when field is empty. Be sure to use the two letter [ISO 3166](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) format
+* `autoFill`: Whether the international country code should be automatically inserted on picking a country, defaults to `false`
+* `autoFormat`: Whether the phone number should be displayed automatically while typing, defaults to `false`
 
-// you can set the hint as follows
-phoneInputLayout.setHint(R.string.phone_hint);
-phoneEditText.setHint(R.string.phone_hint);
-
-// you can set the default country as follows
-phoneInputLayout.setDefaultCountry("DE");
-phoneEditText.setDefaultCountry("FR");
-
-button.setOnClickListener(new View.OnClickListener() {
-  @Override
-  public void onClick(View v) {
-    boolean valid = true;
-    
-    // checks if the field is valid 
-    if (phoneInputLayout.isValid()) {
-      phoneInputLayout.setError(null);
-    } else {
-      // set error message
-      phoneInputLayout.setError(getString(R.string.invalid_phone_number));
-      valid = false;
-    }
-
-    if (phoneEditText.isValid()) {
-      phoneEditText.setError(null);
-    } else {
-      phoneEditText.setError(getString(R.string.invalid_phone_number));
-      valid = false;
-    }
-
-    if (valid) {
-      Toast.makeText(MainActivity.this, R.string.valid_phone_number, Toast.LENGTH_LONG).show();
-    } else {
-      Toast.makeText(MainActivity.this, R.string.invalid_phone_number, Toast.LENGTH_LONG).show();
-    }
-    
-    // Return the phone number as follows
-    String phoneNumber = phoneInputLayout.getPhoneNumber();
-  }
-});
- 
-```
+All of these properties can also be set within your Java code. Please refer to the [sample app](sample) for some examples.
 
 ## Customization
 
-In case the default style doesn't match your app styles, you can extend the PhoneInputLayout, or PhoneEditText and provide your own xml, but keep in mind that you have to provide a valid xml file with at least an EditText (tag = com_lamudi_phonefield_edittext) and Spinner (tag = com_lamudi_phonefield_flag_spinner), otherwise the library will throw an IllegalStateException.
+In case the default style doesn't match your app styles, you can extend the PhoneInputLayout, or PhoneEditText and provide your own xml, but keep in mind that you have to provide a valid xml file with at least an EditText (`tag = phone_edit_text`) and Spinner (`tag = flag_spinner`), otherwise the library will throw an `IllegalStateException`.
 
-You can also create your own custom view by extending the PhoneField directly. 
+You can also create your own custom view by extending the abstract `PhoneField` directly. 
 
 ## Countries generation
-For better performance and to avoid using json data and then parse it to be used in the library, a simple nodejs is used to convert the countries.json file in raw/countries-generator/ into a plain java utility class that has static list of countries.
+For better performance and to avoid using json data and then parse it to be used in the library, a simple nodejs is used to convert the `countries.json` file in raw/countries-generator/ into a plain java utility class that has a two-level static list of countries.
 
 The generation script works as follows:
 ```
@@ -116,15 +89,18 @@ or
 
 ## Motivation
 
-This is probably not the the first library with the same purpose, for instance before I started working on the library I came across [IntlPhoneInput](https://github.com/Rimoto/IntlPhoneInput) which provides almost most of the functionality this library provides, however I chose to develop a new library for the following reasons: 
+This is probably not the the first library with the same purpose, but this one is different for the following reasons: 
  
- * This library provides two implementations of PhoneField using EditText and TextInputLayout
+ * This library provides two implementations of `PhoneField` using `EditText` and `TextInputLayout`
  * This library allows users to extend the functionality and use custom layouts if needed to match the application theme
- * This library uses a static list of countries generated from the countries.json file in the raw resources 
+ * This library uses a static list of countries generated from the `countries.json` file in the raw resources 
+ * This library allows to format phone numbers on the fly
+ * This library provides full support even for complicated international phone prefixes
 
 ## Attributions  
 
  1. Inspired by [intl-tel-input for jQuery](https://github.com/jackocnr/intl-tel-input) and [IntlPhoneInput](https://github.com/Rimoto/IntlPhoneInput)
  2. Flag images from [flags](https://www.gosquared.com/resources/flag-icons/)
- 3. Original country data from mledoze's [World countries in JSON, CSV and XML](https://github.com/mledoze/countries) which is then used to generate a plain Java file
+ 3. Original country data from mledoze's [World countries in JSON, CSV and XML](https://github.com/mledoze/countries) which was highly modified and which is then used to generate a plain Java file
  4. Formatting/validation using [libphonenumber](https://github.com/googlei18n/libphonenumber)
+ 5. Forked from [lamudi-gmbh](/lamudi-gmbh/android-phone-field), to add further features
