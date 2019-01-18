@@ -1,6 +1,9 @@
 android-phone-field
 ===================
 
+![](https://img.shields.io/github/tag/ialokim/android-phone-field.svg?style=flat-square)
+![](https://img.shields.io/github/license/ialokim/android-phone-field.svg?style=flat-square)
+
 A small UI library that allows you to create phone fields with corresponding country flags which format and validate the phone number using [libphonenumber](https://github.com/googlei18n/libphonenumber) from google.
 
 ![Sample App](raw/phone-field.gif "Sample App")
@@ -18,12 +21,13 @@ The library provides two different fields:
  * Formats the phone number according to the currently chosen country with whitespaces, dashes and parentheses
  * Validates the phone number, allows to set a custom error
  * Returns the valid phone number including the country code
+ * Full internationalization with the countries names in every language provided by Android
  
 ## Usage
 
 You can easily add the library to your project using [jitpack.io](https://jitpack.io/#ialokim/android-phone-field/):
 
-* If not already done, add jitpack to your root `build.gradle` at the end of `repositories`:
+* If not already present, add jitpack to your root `build.gradle` at the end of `repositories`:
 
 ```
 allprojects {
@@ -38,7 +42,7 @@ allprojects {
 
 ```
 dependencies {
-    implementation 'com.github.ialokim.android-phone-field:phone-field:master-SNAPSHOT'
+    implementation 'com.github.ialokim:android-phone-field:0.2.1'
 }
 ```
 
@@ -96,6 +100,7 @@ This is probably not the the first library with the same purpose, but this one i
  * This library uses a static list of countries generated from the `countries.json` file in the raw resources 
  * This library allows to format phone numbers on the fly
  * This library provides full support even for complicated international phone prefixes
+ * This library has full i18n support for every language provided by the Android system
 
 ## Attributions  
 

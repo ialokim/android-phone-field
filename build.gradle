@@ -4,8 +4,8 @@ ext {
     compileSdk = 28
     targetSdk = 28
     minSdk = 14
-    vName = "0.2.0"
-    vCode = 20
+    vName = "0.2.1"
+    vCode = 21
 }
 buildscript {
     repositories {
