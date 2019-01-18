@@ -34,7 +34,6 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         app:hint="@string/phone_hint_edit_text"
-        app:defaultCountry="FR"
         app:autoFill="true" />
 
     <Button

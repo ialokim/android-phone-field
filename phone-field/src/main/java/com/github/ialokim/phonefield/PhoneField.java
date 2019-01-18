@@ -20,6 +20,7 @@ import com.google.i18n.phonenumbers.Phonenumber;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 import androidx.annotation.IdRes;
 
@@ -189,12 +190,15 @@ public abstract class PhoneField extends LinearLayout {
             setHint(hint);
         if (defaultCountry != null)
             setDefaultCountry(defaultCountry);
+        else {
+            Country locale = mAdapter.getItem(getCountryPosition(Locale.getDefault().getCountry()));
+            selectCountry(locale);
+        }
         if (autoFill)
             setAutoFill(autoFill);
         if (autoFormat)
             setAutoFormat(autoFormat);
         ta.recycle();
-        selectDefaultCountry();
     }
 
     private Phonenumber.PhoneNumber parsePhoneNumber(String number) throws NumberParseException {
@@ -240,6 +244,15 @@ public abstract class PhoneField extends LinearLayout {
             countries.addAll(c);
         }
         return countries;
+    }
+
+    private int getCountryPosition(String countryCode) {
+        for (Country country : getCountriesAsList()) {
+            if (country.getCode().equalsIgnoreCase(countryCode)) {
+                return mAdapter.getPosition(country);
+            }
+        }
+        return -1;
     }
 
 
@@ -295,12 +308,8 @@ public abstract class PhoneField extends LinearLayout {
      * @param countryCode the country code
      */
     public void setDefaultCountry(String countryCode) {
-        for (Country country : getCountriesAsList()) {
-            if (country.getCode().equalsIgnoreCase(countryCode)) {
-                mDefaultCountryPosition = mAdapter.getPosition(country);
-                return;
-            }
-        }
+        mDefaultCountryPosition = getCountryPosition(countryCode);
+        selectDefaultCountry();
     }
 
     /**
