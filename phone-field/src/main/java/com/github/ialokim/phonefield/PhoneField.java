@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -120,7 +121,9 @@ public abstract class PhoneField extends LinearLayout {
 
             @Override
             public void afterTextChanged(Editable s) {
+
                 String rawNumber = s.toString();
+                Log.d(PhoneField.class.getName(), "afterTextChanged: rawNumber=="+rawNumber);
                 if (rawNumber.isEmpty()) {
                     selectDefaultCountry();
                 } else {
@@ -128,6 +131,7 @@ public abstract class PhoneField extends LinearLayout {
                         rawNumber = rawNumber.replaceFirst("00", "+"); //todo: only valid for Europe??
                         mEditText.removeTextChangedListener(this);
                         mEditText.setText(rawNumber);
+                        //setPhoneNumber(rawNumber);
                         mEditText.addTextChangedListener(this);
                         mEditText.setSelection(1);
                     }
@@ -135,6 +139,7 @@ public abstract class PhoneField extends LinearLayout {
                         Phonenumber.PhoneNumber number = parsePhoneNumber(rawNumber);
                         selectCountry(number);
                     } catch (NumberParseException ignored) {
+
                     }
                 }
             }
@@ -158,6 +163,7 @@ public abstract class PhoneField extends LinearLayout {
                     if (mAutoFill) {
                         String dialCode = mCountry.getDialCode(true);
                         mEditText.setText(dialCode);
+
                         mEditText.setSelection(dialCode.length());
                     } else {
                         mEditText.removeTextChangedListener(textWatcher);
@@ -274,6 +280,7 @@ public abstract class PhoneField extends LinearLayout {
         return mEditText;
     }
 
+    //TODO: This creating problem in code while pasteing the number
     /**
      * Checks whether the entered phone number is valid or not.
      *
@@ -321,7 +328,8 @@ public abstract class PhoneField extends LinearLayout {
         try {
             Phonenumber.PhoneNumber number = parsePhoneNumber(rawNumber);
             selectCountry(number);
-            mEditText.setText(mPhoneUtil.format(number, PhoneNumberUtil.PhoneNumberFormat.NATIONAL));
+            mEditText.setText(rawNumber);
+            //mEditText.setText(mPhoneUtil.format(number, PhoneNumberUtil.PhoneNumberFormat.INTERNATIONAL));
         } catch (NumberParseException ignored) {
         }
     }
