@@ -42,7 +42,7 @@ allprojects {
 
 ```
 dependencies {
-    implementation 'com.github.ialokim:android-phone-field:0.2.1'
+    implementation 'com.github.ialokim:android-phone-field:0.2.2'
 }
 ```
 
