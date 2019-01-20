@@ -50,14 +50,17 @@ public class PhoneNumberFormattingTextWatcher implements TextWatcher {
     /**
      * Indicates the change was caused by ourselves.
      */
-    public boolean mSelfChange = false;
+    boolean mSelfChange = false;
 
     /**
      * Indicates the formatting has been stopped.
      */
     private boolean mStopFormatting;
 
-    public boolean mIgnore;
+    /**
+     * Indicated the change should be ignored
+     */
+    boolean mIgnore;
 
     private AsYouTypeFormatter mFormatter;
 
@@ -67,7 +70,7 @@ public class PhoneNumberFormattingTextWatcher implements TextWatcher {
      * The formatting is based on the current system locale and future locale changes
      * may not take effect on this instance.
      */
-    public PhoneNumberFormattingTextWatcher() {
+    PhoneNumberFormattingTextWatcher() {
         this(Locale.getDefault().getCountry());
     }
 
@@ -77,7 +80,7 @@ public class PhoneNumberFormattingTextWatcher implements TextWatcher {
      * @param countryCode the ISO 3166-1 two-letter country code that indicates the country/region
      * where the phone number is being entered.
      */
-    public PhoneNumberFormattingTextWatcher(String countryCode) {
+    PhoneNumberFormattingTextWatcher(String countryCode) {
         if (countryCode == null) throw new IllegalArgumentException();
         mFormatter = PhoneNumberUtil.getInstance().getAsYouTypeFormatter(countryCode);
     }
@@ -88,7 +91,7 @@ public class PhoneNumberFormattingTextWatcher implements TextWatcher {
      * @param countryCode the ISO 3166-1 two-letter country code that indicates the country/region
      * where the phone number is being entered.
      */
-    public void setCountry(String countryCode) {
+    void setCountry(String countryCode) {
         if (countryCode == null) throw new IllegalArgumentException();
         mFormatter = PhoneNumberUtil.getInstance().getAsYouTypeFormatter(countryCode.toUpperCase());
     }
@@ -99,7 +102,7 @@ public class PhoneNumberFormattingTextWatcher implements TextWatcher {
      *
      * @return the raw phone number without separators
      */
-    public String getRawPhoneNumber() {
+    String getRawPhoneNumber() {
         return mStopFormatting ? null : mRawPhoneNumber;
     }
 

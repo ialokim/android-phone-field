@@ -118,6 +118,7 @@ public abstract class PhoneField extends LinearLayout {
         final TextWatcher textWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                //AsYouTypeFormatter should ignore first call on pasting
                 if (mAutoFormat && isPasting)
                     mPhoneNumberFormatterTextWatcher.mIgnore = true;
             }
@@ -128,6 +129,7 @@ public abstract class PhoneField extends LinearLayout {
 
             @Override
             public void afterTextChanged(Editable s) {
+                //ignore change if triggered by AsYouTypeFormatter
                 if (mAutoFormat && mPhoneNumberFormatterTextWatcher.mSelfChange)
                     return;
 
@@ -136,9 +138,11 @@ public abstract class PhoneField extends LinearLayout {
                     selectDefaultCountry();
                 } else {
                     try {
+                        //try to extract phone number information from rawNumber (which can be any string)
                         Phonenumber.PhoneNumber number = parsePhoneNumber(rawNumber);
                         selectCountry(number);
                         if (isPasting) {
+                            //format the number as international number (+49 ...) or as national number
                             if (mAutoFill)
                                 rawNumber = mPhoneUtil.format(number, PhoneNumberUtil.PhoneNumberFormat.E164);
                             else {
@@ -150,6 +154,7 @@ public abstract class PhoneField extends LinearLayout {
                         Log.d(PhoneField.class.getName(), ignored.toString());
                     }
                     if (isPasting) {
+                        //when pasting, we already tried to parse the string to a phone number, so set it now
                         isPasting = false;
                         mEditText.removeTextChangedListener(this);
                         if (mAutoFormat)
@@ -171,6 +176,7 @@ public abstract class PhoneField extends LinearLayout {
 
         mEditText.addTextChangedListener(textWatcher);
 
+        //this callback is only used to capture a pasting event on the editText
         ActionMode.Callback actionModeCallback = new ActionMode.Callback() {
             @Override
             public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
@@ -207,6 +213,7 @@ public abstract class PhoneField extends LinearLayout {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Country country = mAdapter.getItem(position);
+                //if there was no change, skip
                 if (mCountry == null || mCountry.equals(country))
                     return;
 
@@ -224,6 +231,7 @@ public abstract class PhoneField extends LinearLayout {
                         mEditText.addTextChangedListener(textWatcher);
                     }
                 } else if (mAutoFormat) {
+                    //trigger reformat using the newly selected country
                     mEditText.removeTextChangedListener(textWatcher);
                     mEditText.setText(rawInput);
                     mEditText.setSelection(mEditText.getText().length());
@@ -250,6 +258,7 @@ public abstract class PhoneField extends LinearLayout {
         if (defaultCountry != null)
             setDefaultCountry(defaultCountry);
         else {
+            //if no defaultCountry is specified, select the one from the current Locale
             Country locale = mAdapter.getItem(getCountryPosition(Locale.getDefault().getCountry()));
             selectCountry(locale);
         }
