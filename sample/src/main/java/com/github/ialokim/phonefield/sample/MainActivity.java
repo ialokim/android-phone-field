@@ -72,5 +72,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        phoneEditText.setPhoneNumber("+4917558585858");
+        phoneInputLayout.setPhoneNumber("Dies ist ein Test mit 017558585858");
     }
 }

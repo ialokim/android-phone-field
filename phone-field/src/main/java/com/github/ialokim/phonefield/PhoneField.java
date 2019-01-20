@@ -2,9 +2,14 @@ package com.github.ialokim.phonefield;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Build;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -48,6 +53,8 @@ public abstract class PhoneField extends LinearLayout {
     private boolean mAutoFill = false;
     private boolean mAutoFormat = false;
     private int mDefaultCountryPosition = -1;
+
+    private boolean isPasting = false;
 
     /**
      * Instantiates a new Phone field.
@@ -111,7 +118,8 @@ public abstract class PhoneField extends LinearLayout {
         final TextWatcher textWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+                if (mAutoFormat && isPasting)
+                    mPhoneNumberFormatterTextWatcher.mIgnore = true;
             }
 
             @Override
@@ -120,10 +128,36 @@ public abstract class PhoneField extends LinearLayout {
 
             @Override
             public void afterTextChanged(Editable s) {
+                if (mAutoFormat && mPhoneNumberFormatterTextWatcher.mSelfChange)
+                    return;
+
                 String rawNumber = s.toString();
                 if (rawNumber.isEmpty()) {
                     selectDefaultCountry();
                 } else {
+                    try {
+                        Phonenumber.PhoneNumber number = parsePhoneNumber(rawNumber);
+                        selectCountry(number);
+                        if (isPasting) {
+                            if (mAutoFill)
+                                rawNumber = mPhoneUtil.format(number, PhoneNumberUtil.PhoneNumberFormat.E164);
+                            else {
+                                String leadingZeros = new String(new char[number.getNumberOfLeadingZeros()]).replace('\0', '0');
+                                rawNumber = String.valueOf(leadingZeros + number.getNationalNumber());
+                            }
+                        }
+                    } catch (NumberParseException ignored) {
+                        Log.d(PhoneField.class.getName(), ignored.toString());
+                    }
+                    if (isPasting) {
+                        isPasting = false;
+                        mEditText.removeTextChangedListener(this);
+                        if (mAutoFormat)
+                            mPhoneNumberFormatterTextWatcher.mIgnore = false;
+                        mEditText.setText(rawNumber);
+                        mEditText.addTextChangedListener(this);
+                        mEditText.setSelection(mEditText.length());
+                    }
                     if (rawNumber.startsWith("00")) {
                         rawNumber = rawNumber.replaceFirst("00", "+"); //todo: only valid for Europe??
                         mEditText.removeTextChangedListener(this);
@@ -131,16 +165,41 @@ public abstract class PhoneField extends LinearLayout {
                         mEditText.addTextChangedListener(this);
                         mEditText.setSelection(1);
                     }
-                    try {
-                        Phonenumber.PhoneNumber number = parsePhoneNumber(rawNumber);
-                        selectCountry(number);
-                    } catch (NumberParseException ignored) {
-                    }
                 }
             }
         };
 
         mEditText.addTextChangedListener(textWatcher);
+
+        ActionMode.Callback actionModeCallback = new ActionMode.Callback() {
+            @Override
+            public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
+                return true;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
+                return true;
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case android.R.id.paste:
+                        isPasting = true;
+                }
+                return false;
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode actionMode) {
+
+            }
+        };
+
+        mEditText.setCustomSelectionActionModeCallback(actionModeCallback);
+        if (Build.VERSION.SDK_INT >= 23)
+            mEditText.setCustomInsertionActionModeCallback(actionModeCallback);
 
         mSpinner.setAdapter(mAdapter);
 
@@ -318,12 +377,8 @@ public abstract class PhoneField extends LinearLayout {
      * @param rawNumber the raw number
      */
     public void setPhoneNumber(String rawNumber) {
-        try {
-            Phonenumber.PhoneNumber number = parsePhoneNumber(rawNumber);
-            selectCountry(number);
-            mEditText.setText(mPhoneUtil.format(number, PhoneNumberUtil.PhoneNumberFormat.NATIONAL));
-        } catch (NumberParseException ignored) {
-        }
+        isPasting = true;
+        mEditText.setText(rawNumber);
     }
 
     /**
@@ -373,7 +428,12 @@ public abstract class PhoneField extends LinearLayout {
      * @return the raw input
      */
     public String getRawInput() {
-        return mAutoFormat ? mPhoneNumberFormatterTextWatcher.getRawPhoneNumber() : mEditText.getText().toString();
+        if (mAutoFormat) {
+            String rawNumber = mPhoneNumberFormatterTextWatcher.getRawPhoneNumber();
+            if (rawNumber != null)
+                return rawNumber;
+        }
+        return mEditText.getText().toString();
     }
 
     /**

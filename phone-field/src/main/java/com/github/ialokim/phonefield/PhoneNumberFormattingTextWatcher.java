@@ -50,12 +50,14 @@ public class PhoneNumberFormattingTextWatcher implements TextWatcher {
     /**
      * Indicates the change was caused by ourselves.
      */
-    private boolean mSelfChange = false;
+    public boolean mSelfChange = false;
 
     /**
      * Indicates the formatting has been stopped.
      */
     private boolean mStopFormatting;
+
+    public boolean mIgnore;
 
     private AsYouTypeFormatter mFormatter;
 
@@ -93,17 +95,18 @@ public class PhoneNumberFormattingTextWatcher implements TextWatcher {
 
     /**
      * Get the unformatted phone number, which is being updated while formatting
+     * or {@code null} if the formatting got stuck
      *
      * @return the raw phone number without separators
      */
     public String getRawPhoneNumber() {
-        return mRawPhoneNumber;
+        return mStopFormatting ? null : mRawPhoneNumber;
     }
 
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count,
                                   int after) {
-        if (mSelfChange || mStopFormatting) {
+        if (mSelfChange || mStopFormatting || mIgnore) {
             return;
         }
         // If the user manually deleted any non-dialable characters, stop formatting
@@ -115,11 +118,12 @@ public class PhoneNumberFormattingTextWatcher implements TextWatcher {
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if (mSelfChange || mStopFormatting) {
+        if (mSelfChange || mStopFormatting || mIgnore) {
             return;
         }
         // If the user inserted any non-dialable characters, stop formatting
-        if (count > 0 && hasSeparator(s, start, count)) {
+        // except when he is inserting all the characters
+        if (count > 0 && hasSeparator(s, start, count) && before != 0) {
             stopFormatting();
         }
     }
@@ -131,7 +135,7 @@ public class PhoneNumberFormattingTextWatcher implements TextWatcher {
             mStopFormatting = !(s.length() == 0);
             return;
         }
-        if (mSelfChange) {
+        if (mSelfChange || mIgnore) {
             // Ignore the change caused by s.replace().
             return;
         }
